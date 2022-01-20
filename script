@@ -42,7 +42,7 @@ df$Age_cat.x <- factor(df$Age_cat.x, levels = c(levels(df$Age_cat.x), ""))
 df$age_range <- coalesce(df$Age_cat.x,df$Age_cat.y)
 
 table(df$age_range)
-p1<- ggplot(df, aes(age_range))+
+p1<- ggplot(df, aes(age_range, fill=Gender))+
   geom_bar(stat="count")+
   theme_classic()
 
@@ -55,4 +55,19 @@ p2<-ggplot(data=df_age, aes(x=Age, y=Percentage)) +
     geom_bar(colour="#fc8b9b", stat="identity")
 
 multiplot(p1, p2, cols=2)
+```
+
+# gender
+```{r}
+df$Please.indicate.your.gender.y <- factor(df$Please.indicate.your.gender.y, levels = c(levels(df$Please.indicate.your.gender.y), "Prefer not to disclose"))
+
+df$Gender <- coalesce(df$Please.indicate.your.gender.x,df$Please.indicate.your.gender.y)
+
+
+p1<- df%>%
+  filter(Gender !="Prefer not to disclose")%>%
+  filter(age_range !="")%>%
+  ggplot(aes(age_range, fill=Gender))+
+  geom_bar(stat="count")+
+  theme_classic()
 ```
