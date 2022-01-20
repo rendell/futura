@@ -1,0 +1,26 @@
+---
+title: "Futura survey notebook"
+output:
+  html_document:
+    df_print: paged
+---
+# Data analysis Futura surveys
+
+
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(readr)
+```
+
+```{r, message=FALSE, warning=FALSE}
+offline<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/offline.csv")
+online<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/online.csv")
+
+offline<-as_tibble(offline)
+online<-as_tibble(online)
+```
+
+```{r}
+
+```
+
