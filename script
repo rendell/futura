@@ -11,38 +11,37 @@ library(tidyverse)
 library(readr)
 library(ggplot2)
 library(Rmisc)
+library(DataEditR)
 ```
 
 ```{r, message=FALSE, warning=FALSE}
-offline<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/offline.csv")
-online<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/online.csv")
+df<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/combined.csv")
 
-offline<-as_tibble(offline)
-online<-as_tibble(online)
+df<-as_tibble(df)
 ```
 
-## merge 
-Merge online and offline datasets into a single dateset
-```{r}
-df <- full_join(offline,
-                         online,
-                         by="Submission.Id")
-v_offline <-as_tibble(ls(offline))
-v_online<-as.tibble(ls(online))
+```{r, error=FALSE}
+df<- data_edit(x=combined)
 ```
+
+
+
+
+## Variables
+The following variables were prepared:
+
+Nr.  | Variable                              | Code                             | Status     | Comment 
+---- | ------------------------------------- | ------------------------------   | ---------- | ------------------
+1    | Age range interval                    | age_range                        | Completed  |
+2    | Status of completion                  | Completion                       | Pending    |
+3    | x                                     | x                                | Pending    |
+
+
+
 
 ## Coalesce
 ```{r, message=False}
-table(df$Age_cat.x)
-table(df$Age_cat.y)
-
-df$Age_cat.y <- factor(df$Age_cat.y, levels = c(levels(df$Age_cat.y), "76-111"))
-df$Age_cat.x <- factor(df$Age_cat.x, levels = c(levels(df$Age_cat.x), ""))
-
-df$age_range <- coalesce(df$Age_cat.x,df$Age_cat.y)
-
-table(df$age_range)
-p1<- ggplot(df, aes(age_range, fill=Gender))+
+p1<- ggplot(df, aes(Age, fill=Gender))+
   geom_bar(stat="count")+
   theme_classic()
 
@@ -53,21 +52,18 @@ df_age <- data.frame(Age, Percentage)
 
 p2<-ggplot(data=df_age, aes(x=Age, y=Percentage)) +
     geom_bar(colour="#fc8b9b", stat="identity")
-
-multiplot(p1, p2, cols=2)
 ```
 
 # gender
 ```{r}
-df$Please.indicate.your.gender.y <- factor(df$Please.indicate.your.gender.y, levels = c(levels(df$Please.indicate.your.gender.y), "Prefer not to disclose"))
-
-df$Gender <- coalesce(df$Please.indicate.your.gender.x,df$Please.indicate.your.gender.y)
-
-
 p1<- df%>%
   filter(Gender !="Prefer not to disclose")%>%
-  filter(age_range !="")%>%
-  ggplot(aes(age_range, fill=Gender))+
+  filter(Age !="")%>%
+  ggplot(aes(Age, fill=Gender))+
   geom_bar(stat="count")+
   theme_classic()
+```
+
+```{r}
+multiplot(p1, p2, cols=2)
 ```
