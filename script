@@ -12,6 +12,7 @@ library(readr)
 library(ggplot2)
 library(Rmisc)
 library(DataEditR)
+library(esquisse)
 ```
 
 ```{r, message=FALSE, warning=FALSE}
@@ -21,7 +22,8 @@ df<-as_tibble(df)
 ```
 
 ```{r, error=FALSE}
-df<- data_edit(x=combined)
+df<- data_edit(x=df)
+esquisse::esquisser(df)
 ```
 
 
@@ -35,8 +37,6 @@ Nr.  | Variable                              | Code                             
 1    | Age range interval                    | age_range                        | Completed  |
 2    | Status of completion                  | Completion                       | Pending    |
 3    | x                                     | x                                | Pending    |
-
-
 
 
 ## Coalesce
