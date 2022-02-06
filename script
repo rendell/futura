@@ -6,6 +6,10 @@ output:
 ---
 # Data analysis Futura surveys
 
+Futura colours we will be using:
+"#fc8b9b"
+
+
 ```{r, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(readr)
@@ -27,20 +31,34 @@ GAC<-as_tibble(GAC)
 ```{r}
 df          <- left_join(df,GAC,
                                     by=c("Street"="Straatnaam"))
+df$x <- df$POINT_X
+df$y <- df$POINT_Y
 ```
 
 #Actual mapping
 ```{r}
 # extract map
-ArubaMap <- openmap(c(12.159,-70.0578),
-    c(-45,160),
-#   type = "osm",
-#   type = "esri",
-    type = "nps",
-    minNumTiles=12)
-# plot map
-plot(ArubaMap)
+library(ggmap)
 
+aruba <- get_stamenmap(bbox = c(left = -70.175131, 
+                                    bottom = 12.40446, 
+                                    right = -69.79788, 
+                                    top = 12.63056),
+                           zoom = 12, 
+                           maptype = "toner-lite")
+
+
+ggmap(aruba) + # the base map
+  geom_jitter(position = position_jitter(width = 0.003, height = 0.003),
+              data = df, aes(x = x, y = y), 
+             color = "#fc8b9b",
+             alpha = 7/10)+
+  ggtitle("Individual survey responses")  +  
+  theme_void()+
+  theme(plot.title = element_text(color="#fc8b9b", size=14, face="bold.italic"),
+        axis.title.x = element_blank(),
+  axis.title.y = element_blank()
+  )
 ```
 
 
@@ -99,4 +117,5 @@ prop.table(table(df$Internet_home_cable))
 #calculate frequency table of proportions for position and points variable
 prop.table(table(df$Age, df$Time))
 ```
+
 
