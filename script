@@ -13,19 +13,35 @@ library(ggplot2)
 library(Rmisc)
 library(DataEditR)
 library(esquisse)
+library(OpenStreetMap)
 ```
 
 ```{r, message=FALSE, warning=FALSE}
 df<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/combined.csv")
-
 df<-as_tibble(df)
+
+GAC<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/GAC.csv", stringsAsFactors = FALSE)
+GAC<-as_tibble(GAC)
 ```
 
-```{r, error=FALSE}
-df<- data_edit(x=df)
-esquisse::esquisser(df)
+```{r}
+df          <- left_join(df,GAC,
+                                    by=c("Street"="Straatnaam"))
 ```
 
+#Actual mapping
+```{r}
+# extract map
+ArubaMap <- openmap(c(12.159,-70.0578),
+    c(-45,160),
+#   type = "osm",
+#   type = "esri",
+    type = "nps",
+    minNumTiles=12)
+# plot map
+plot(ArubaMap)
+
+```
 
 
 
@@ -37,6 +53,8 @@ Nr.  | Variable                              | Code                             
 1    | Age range interval                    | age_range                        | Completed  |
 2    | Status of completion                  | Completion                       | Pending    |
 3    | x                                     | x                                | Pending    |
+
+
 
 
 ## Coalesce
@@ -67,3 +85,18 @@ p1<- df%>%
 ```{r}
 multiplot(p1, p2, cols=2)
 ```
+
+```{r}
+#only display two decimal places
+options(digits=2)
+
+prop.table(table(df$Education))
+
+prop.table(table(df$Age))
+
+prop.table(table(df$Internet_home_cable))
+
+#calculate frequency table of proportions for position and points variable
+prop.table(table(df$Age, df$Time))
+```
+
