@@ -40,12 +40,94 @@ df$y <- df$POINT_Y
 # extract map
 library(ggmap)
 
+# maptype = c("terrain",
+  "terrain-background", "terrain-labels", "terrain-lines", "toner",
+  "toner-2010", "toner-2011", "toner-background", "toner-hybrid",
+  "toner-labels", "toner-lines", "toner-lite", "watercolor")
+
 aruba <- get_stamenmap(bbox = c(left = -70.175131, 
                                     bottom = 12.40446, 
                                     right = -69.79788, 
                                     top = 12.63056),
                            zoom = 12, 
                            maptype = "toner-lite")
+
+aruba1 <- get_stamenmap(bbox = c(left = -70.175131, 
+                                    bottom = 12.40446, 
+                                    right = -69.79788, 
+                                    top = 12.63056),
+                           zoom = 12, 
+                           maptype = "toner-background")
+
+aruba2 <- get_stamenmap(bbox = c(left = -70.175131, 
+                                    bottom = 12.40446, 
+                                    right = -69.79788, 
+                                    top = 12.63056),
+                           zoom = 12, 
+                           maptype = "terrain-background")
+
+aruba3 <- get_stamenmap(bbox = c(left = -70.175131, 
+                                    bottom = 12.40446, 
+                                    right = -69.79788, 
+                                    top = 12.63056),
+                           zoom = 12, 
+                           maptype = "terrain-labels")
+
+aruba4 <- get_stamenmap(bbox = c(left = -70.175131, 
+                                    bottom = 12.40446, 
+                                    right = -69.79788, 
+                                    top = 12.63056),
+                           zoom = 12, 
+                           maptype = "terrain-lines")
+
+aruba5 <- get_stamenmap(bbox = c(left = -70.175131, 
+                                    bottom = 12.40446, 
+                                    right = -69.79788, 
+                                    top = 12.63056),
+                           zoom = 12, 
+                           maptype = "toner")
+
+aruba6 <- get_stamenmap(bbox = c(left = -70.175131, 
+                                    bottom = 12.40446, 
+                                    right = -69.79788, 
+                                    top = 12.63056),
+                           zoom = 12, 
+                           maptype = "toner-2010")
+
+aruba7 <- get_stamenmap(bbox = c(left = -70.175131, 
+                                    bottom = 12.40446, 
+                                    right = -69.79788, 
+                                    top = 12.63056),
+                           zoom = 12, 
+                           maptype = "toner-2011")
+
+aruba8 <- get_stamenmap(bbox = c(left = -70.175131, 
+                                    bottom = 12.40446, 
+                                    right = -69.79788, 
+                                    top = 12.63056),
+                           zoom = 12, 
+                           maptype = "toner-hybrid")
+
+aruba9 <- get_stamenmap(bbox = c(left = -70.175131, 
+                                    bottom = 12.40446, 
+                                    right = -69.79788, 
+                                    top = 12.63056),
+                           zoom = 12, 
+                           maptype = "toner-labels")
+
+aruba10 <- get_stamenmap(bbox = c(left = -70.175131, 
+                                    bottom = 12.40446, 
+                                    right = -69.79788, 
+                                    top = 12.63056),
+                           zoom = 12, 
+                           maptype = "toner-lines")
+
+aruba11 <- get_stamenmap(bbox = c(left = -70.175131, 
+                                    bottom = 12.40446, 
+                                    right = -69.79788, 
+                                    top = 12.63056),
+                           zoom = 12, 
+                           maptype = "watercolor")
 
 
 ggmap(aruba) + # the base map
@@ -59,6 +141,140 @@ ggmap(aruba) + # the base map
         axis.title.x = element_blank(),
   axis.title.y = element_blank()
   )
+
+ggmap(aruba1) + # the base map
+  geom_jitter(position = position_jitter(width = 0.003, height = 0.003),
+              data = df, aes(x = x, y = y), 
+             color = "#fc8b9b",
+             alpha = 7/10)+
+  ggtitle("Individual survey responses")  +  
+  theme_void()+
+  theme(plot.title = element_text(color="#fc8b9b", size=14, face="bold.italic"),
+        axis.title.x = element_blank(),
+  axis.title.y = element_blank()
+  )
+
+ggmap(aruba2) + # the base map
+  geom_jitter(position = position_jitter(width = 0.003, height = 0.003),
+              data = df, aes(x = x, y = y), 
+             color = "#fc8b9b",
+             alpha = 7/10)+
+  ggtitle("Individual survey responses")  +  
+  theme_void()+
+  theme(plot.title = element_text(color="#fc8b9b", size=14, face="bold.italic"),
+        axis.title.x = element_blank(),
+  axis.title.y = element_blank()
+  )
+
+ggmap(aruba3) + # the base map
+  geom_jitter(position = position_jitter(width = 0.003, height = 0.003),
+              data = df, aes(x = x, y = y), 
+             color = "#fc8b9b",
+             alpha = 7/10)+
+  ggtitle("Individual survey responses")  +  
+  theme_void()+
+  theme(plot.title = element_text(color="#fc8b9b", size=14, face="bold.italic"),
+        axis.title.x = element_blank(),
+  axis.title.y = element_blank()
+  )
+
+ggmap(aruba4) + # the base map
+  geom_jitter(position = position_jitter(width = 0.003, height = 0.003),
+              data = df, aes(x = x, y = y), 
+             color = "#fc8b9b",
+             alpha = 7/10)+
+  ggtitle("Individual survey responses")  +  
+  theme_void()+
+  theme(plot.title = element_text(color="#fc8b9b", size=14, face="bold.italic"),
+        axis.title.x = element_blank(),
+  axis.title.y = element_blank()
+  )
+
+ggmap(aruba5) + # the base map
+  geom_jitter(position = position_jitter(width = 0.003, height = 0.003),
+              data = df, aes(x = x, y = y), 
+             color = "#fc8b9b",
+             alpha = 7/10)+
+  ggtitle("Individual survey responses")  +  
+  theme_void()+
+  theme(plot.title = element_text(color="#fc8b9b", size=14, face="bold.italic"),
+        axis.title.x = element_blank(),
+  axis.title.y = element_blank()
+  )
+
+
+ggmap(aruba6) + # the base map
+  geom_jitter(position = position_jitter(width = 0.003, height = 0.003),
+              data = df, aes(x = x, y = y), 
+             color = "#fc8b9b",
+             alpha = 7/10)+
+  ggtitle("Individual survey responses")  +  
+  theme_void()+
+  theme(plot.title = element_text(color="#fc8b9b", size=14, face="bold.italic"),
+        axis.title.x = element_blank(),
+  axis.title.y = element_blank()
+  )
+
+ggmap(aruba7) + # the base map
+  geom_jitter(position = position_jitter(width = 0.003, height = 0.003),
+              data = df, aes(x = x, y = y), 
+             color = "#fc8b9b",
+             alpha = 7/10)+
+  ggtitle("Individual survey responses")  +  
+  theme_void()+
+  theme(plot.title = element_text(color="#fc8b9b", size=14, face="bold.italic"),
+        axis.title.x = element_blank(),
+  axis.title.y = element_blank()
+  )
+
+ggmap(aruba8) + # the base map
+  geom_jitter(position = position_jitter(width = 0.003, height = 0.003),
+              data = df, aes(x = x, y = y), 
+             color = "#fc8b9b",
+             alpha = 7/10)+
+  ggtitle("Individual survey responses")  +  
+  theme_void()+
+  theme(plot.title = element_text(color="#fc8b9b", size=14, face="bold.italic"),
+        axis.title.x = element_blank(),
+  axis.title.y = element_blank()
+  )
+
+ggmap(aruba9) + # the base map
+  geom_jitter(position = position_jitter(width = 0.003, height = 0.003),
+              data = df, aes(x = x, y = y), 
+             color = "#fc8b9b",
+             alpha = 7/10)+
+  ggtitle("Individual survey responses")  +  
+  theme_void()+
+  theme(plot.title = element_text(color="#fc8b9b", size=14, face="bold.italic"),
+        axis.title.x = element_blank(),
+  axis.title.y = element_blank()
+  )
+
+ggmap(aruba10) + # the base map
+  geom_jitter(position = position_jitter(width = 0.003, height = 0.003),
+              data = df, aes(x = x, y = y), 
+             color = "#fc8b9b",
+             alpha = 7/10)+
+  ggtitle("Individual survey responses")  +  
+  theme_void()+
+  theme(plot.title = element_text(color="#fc8b9b", size=14, face="bold.italic"),
+        axis.title.x = element_blank(),
+  axis.title.y = element_blank()
+  )
+
+ggmap(aruba11) + # the base map
+  geom_jitter(position = position_jitter(width = 0.003, height = 0.003),
+              data = df, aes(x = x, y = y), 
+             color = "#fc8b9b",
+             alpha = 7/10)+
+  ggtitle("Individual survey responses")  +  
+  theme_void()+
+  theme(plot.title = element_text(color="#fc8b9b", size=14, face="bold.italic"),
+        axis.title.x = element_blank(),
+  axis.title.y = element_blank()
+  )
+
 ```
 
 
