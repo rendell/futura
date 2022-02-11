@@ -26,6 +26,9 @@ df<-as_tibble(df)
 
 GAC<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/GAC.csv", stringsAsFactors = FALSE)
 GAC<-as_tibble(GAC)
+
+BUS<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/Digital_survey.csv", stringsAsFactors = FALSE)
+BUS<-as_tibble(BUS)
 ```
 
 ```{r}
@@ -41,9 +44,9 @@ df$y <- df$POINT_Y
 library(ggmap)
 
 # maptype = c("terrain",
-  "terrain-background", "terrain-labels", "terrain-lines", "toner",
-  "toner-2010", "toner-2011", "toner-background", "toner-hybrid",
-  "toner-labels", "toner-lines", "toner-lite", "watercolor")
+#  "terrain-background", "terrain-labels", "terrain-lines", "toner",
+#  "toner-2010", "toner-2011", "toner-background", "toner-hybrid",
+#  "toner-labels", "toner-lines", "toner-lite", "watercolor")
 
 aruba <- get_stamenmap(bbox = c(left = -70.175131, 
                                     bottom = 12.40446, 
@@ -334,4 +337,36 @@ prop.table(table(df$Internet_home_cable))
 prop.table(table(df$Age, df$Time))
 ```
 
+# Business survey manipulations
+```{r}
+BUS_Select <- BUS%>%
+  select(What.is.the.name.of.your.organization.,
+         How.many.employees.does.your.business.employ.at.the.moment.,
+         Which.sector.best.describes.your.principle.economic.activity.)
+```
 
+Micro | 1-10
+Small | 11-50
+Medium |51-250
+Large |  >250
+
+```{r}
+BUS_Select$type <- 
+  ifelse((BUS_Select$How.many.employees.does.your.business.employ.at.the.moment.>=1)&
+           (BUS_Select$How.many.employees.does.your.business.employ.at.the.moment. <= 10),
+         "Micro", 
+         ifelse((BUS_Select$How.many.employees.does.your.business.employ.at.the.moment. >= 11)&
+                  (BUS_Select$How.many.employees.does.your.business.employ.at.the.moment. <= 50),
+                "Small",
+                ifelse((BUS_Select$How.many.employees.does.your.business.employ.at.the.moment. >= 51) & (BUS_Select$How.many.employees.does.your.business.employ.at.the.moment. <= 250),"Medium",
+ifelse(BUS_Select$How.many.employees.does.your.business.employ.at.the.moment. > 250,"Large","NA")
+         )))
+
+
+table_bus<- as_tibble(select(BUS_Select$How.many.employees.does.your.business.employ.at.the.moment.,BUS$_Select$What.is.the.name.of.your.organization.))
+table_bus$employee_nr <- table_bus$value
+
+BUS_Select%>%
+  group_by(type)%>%
+  mutate(Percentage=paste0(round(count(type)/sum(count(type))*100,2),"%"))
+```
