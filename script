@@ -306,7 +306,8 @@ Percentage <- c(24,26,19,26,5)
 df_age <- data.frame(Age, Percentage)
 
 p2<-ggplot(data=df_age, aes(x=Age, y=Percentage)) +
-    geom_bar(colour="#fc8b9b", stat="identity")
+    geom_bar(colour="#fc8b9b", stat="identity")+
+  theme_classic()
 ```
 
 # gender
@@ -362,11 +363,15 @@ BUS_Select$type <-
 ifelse(BUS_Select$How.many.employees.does.your.business.employ.at.the.moment. > 250,"Large","NA")
          )))
 
+rename(iris, petal_length = Petal.Length)
 
-table_bus<- as_tibble(select(BUS_Select$How.many.employees.does.your.business.employ.at.the.moment.,BUS$_Select$What.is.the.name.of.your.organization.))
-table_bus$employee_nr <- table_bus$value
 
 BUS_Select%>%
   group_by(type)%>%
   mutate(Percentage=paste0(round(count(type)/sum(count(type))*100,2),"%"))
+```
+
+
+```{r}
+write.csv(BUS_Select,"BUS_Select.csv", row.names = FALSE)
 ```
