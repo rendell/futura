@@ -6,8 +6,10 @@ output:
 ---
 # Data analysis Futura surveys
 
-Futura colours we will be using:
-"#fc8b9b"
+## Futura colours we will be using:
+Pink: "#fc8b9b" 
+Peach: "#F6BC65"
+
 
 
 ```{r, message=FALSE, warning=FALSE}
