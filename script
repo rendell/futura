@@ -23,14 +23,20 @@ library(OpenStreetMap)
 ```
 
 ```{r, message=FALSE, warning=FALSE}
+#data set pertaining to survey of individuals
 df<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/combined.csv")
 df<-as_tibble(df)
 
 GAC<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/GAC.csv", stringsAsFactors = FALSE)
 GAC<-as_tibble(GAC)
 
+#data set pertaining to survey of businesses
 BUS<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/DES.csv", stringsAsFactors = FALSE)
 BUS<-as_tibble(BUS)
+
+df_b<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/DE_BS.csv", stringsAsFactors = FALSE)
+df_b<-as_tibble(df_b)
+
 ```
 
 ```{r}
