@@ -45,7 +45,9 @@ coord_sf() + theme(panel.background = element_blank(),
         axis.ticks.x=element_blank(), #remove x axis ticks
         axis.text.y=element_blank(),  #remove y axis labels
         axis.ticks.y=element_blank()  #remove y axis ticks
-                   )+ ggtitle("Figure X: Broadband divide")
+                   )+ ggtitle("Figure X: Broadband divide")+ 
+  labs(caption = "Source: Cornerstone Economics 2022")
+
 
 ```
 
@@ -340,4 +342,84 @@ p1<- df%>%
 
 ```{r}
 multiplot(p1, p2, cols=2)
+```
+
+```{r}
+#only display two decimal places
+options(digits=2)
+
+prop.table(table(df$Education))
+
+prop.table(table(df$Age))
+
+prop.table(table(df$Internet_home_cable))
+
+#calculate frequency table of proportions for position and points variable
+prop.table(table(df$Age, df$Time))
+```
+
+
+# Individual survey indicator dimensions
+## 5. Urban-rural broadband divide
+
+San Nicolas
+20/(26+7+20)*100=37.7% has no access to broadband at home
+
+Noord / Tanki Leendert
+28/(58+28)*100 = 32.6% has no access to broadband at home
+
+Divide:
+37.7%-32.6% = 5.1%
+
+```{r}
+table(df$Regio, df$Internet_home_cable)
+table(df$Regio, df$Internet_home_no_access)
+```
+
+
+## Shape file 
+```{r}
+
+```
+
+
+
+# Business survey manipulations
+
+## Data cleaning
+```{r}
+df_b<- df_b%>%
+  filter(CompletionStatus !="Partially Completed")
+
+
+BUS_Select <- df_b%>%
+  select(What.is.the.name.of.your.organization.,
+         How.many.employees.does.your.business.employ.at.the.moment.,
+         Which.sector.best.describes.your.principle.economic.activity.)
+```
+
+Micro | 1-10
+Small | 11-50
+Medium |51-250
+Large |  >250
+
+```{r}
+BUS_Select$type <- 
+  ifelse((BUS_Select$How.many.employees.does.your.business.employ.at.the.moment.>=0)&
+           (BUS_Select$How.many.employees.does.your.business.employ.at.the.moment. <= 10),
+         "Micro", 
+         ifelse((BUS_Select$How.many.employees.does.your.business.employ.at.the.moment. >= 11)&
+                  (BUS_Select$How.many.employees.does.your.business.employ.at.the.moment. <= 50),
+                "Small",
+                ifelse((BUS_Select$How.many.employees.does.your.business.employ.at.the.moment. >= 51) & (BUS_Select$How.many.employees.does.your.business.employ.at.the.moment. <= 250),"Medium",
+ifelse(BUS_Select$How.many.employees.does.your.business.employ.at.the.moment. > 250,"Large","NA")
+         )))
+
+table(BUS_Select$type)
+
+```
+
+
+```{r}
+write.csv(BUS_Select,"BUS_Select.csv", row.names = FALSE)
 ```
