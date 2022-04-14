@@ -17,9 +17,8 @@ library(tidyverse)
 library(readr)
 library(ggplot2)
 library(Rmisc)
-library(DataEditR)
-library(esquisse)
 library(OpenStreetMap)
+library(sf)
 ```
 
 ```{r, message=FALSE, warning=FALSE}
@@ -31,11 +30,22 @@ GAC<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/GAC.csv", 
 GAC<-as_tibble(GAC)
 
 #data set pertaining to survey of businesses
-BUS<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/DES.csv", stringsAsFactors = FALSE)
-BUS<-as_tibble(BUS)
-
 df_b<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/DE_BS.csv", stringsAsFactors = FALSE)
 df_b<-as_tibble(df_b)
+
+#requires uploading from the computer untill now have not been able to link to github
+shape<- st_read("GAC_Regios_WGS1984.shp")
+#To add the regions by colour
+shape$region<- c("#fc8b9b","#ffffff","#ffffff","#ffffff","#ffffff","#F6BC65","#F6BC65","#ffffff")
+#plot
+ggplot() + 
+geom_sf(data = shape, size = 0.1, color = "black", fill = shape$region) + 
+coord_sf() + theme(panel.background = element_blank(),
+                   axis.text.x=element_blank(), #remove x axis labels
+        axis.ticks.x=element_blank(), #remove x axis ticks
+        axis.text.y=element_blank(),  #remove y axis labels
+        axis.ticks.y=element_blank()  #remove y axis ticks
+                   )+ ggtitle("Figure X: Broadband divide")
 
 ```
 
@@ -330,56 +340,4 @@ p1<- df%>%
 
 ```{r}
 multiplot(p1, p2, cols=2)
-```
-
-```{r}
-#only display two decimal places
-options(digits=2)
-
-prop.table(table(df$Education))
-
-prop.table(table(df$Age))
-
-prop.table(table(df$Internet_home_cable))
-
-#calculate frequency table of proportions for position and points variable
-prop.table(table(df$Age, df$Time))
-```
-
-# Business survey manipulations
-```{r}
-BUS_Select <- BUS%>%
-  select(What.is.the.name.of.your.organization.,
-         How.many.employees.does.your.business.employ.at.the.moment.,
-         Which.sector.best.describes.your.principle.economic.activity.)
-```
-
-Micro | 1-10
-Small | 11-50
-Medium |51-250
-Large |  >250
-
-```{r}
-BUS_Select$type <- 
-  ifelse((BUS_Select$How.many.employees.does.your.business.employ.at.the.moment.>=1)&
-           (BUS_Select$How.many.employees.does.your.business.employ.at.the.moment. <= 10),
-         "Micro", 
-         ifelse((BUS_Select$How.many.employees.does.your.business.employ.at.the.moment. >= 11)&
-                  (BUS_Select$How.many.employees.does.your.business.employ.at.the.moment. <= 50),
-                "Small",
-                ifelse((BUS_Select$How.many.employees.does.your.business.employ.at.the.moment. >= 51) & (BUS_Select$How.many.employees.does.your.business.employ.at.the.moment. <= 250),"Medium",
-ifelse(BUS_Select$How.many.employees.does.your.business.employ.at.the.moment. > 250,"Large","NA")
-         )))
-
-rename(iris, petal_length = Petal.Length)
-
-
-BUS_Select%>%
-  group_by(type)%>%
-  mutate(Percentage=paste0(round(count(type)/sum(count(type))*100,2),"%"))
-```
-
-
-```{r}
-write.csv(BUS_Select,"BUS_Select.csv", row.names = FALSE)
 ```
