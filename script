@@ -19,6 +19,7 @@ library(ggplot2)
 library(Rmisc)
 library(OpenStreetMap)
 library(sf)
+library(treemap)
 ```
 
 ```{r, message=FALSE, warning=FALSE}
@@ -382,6 +383,34 @@ table(df$Regio, df$Internet_home_no_access)
 
 ```
 
+## 7. Uptake of digital government services
+```{r}
+table(df$Internet_Censo)
+table(df$Internet_Setar)
+table(df$Internet_SVB)
+table(df$Internet_Tax_dep)
+table(df$Internet_utilities)
+table(df$Internet_Other)
+
+df_y<- df%>%
+  filter()
+  
+  
+  
+df$Internet_some <- ifelse(df$Internet_Censo=="Censo" | 
+                       df$Internet_Setar=="Communication (Setar)"|
+                       df$Internet_SVB=="Pension (SVB)" |
+                       df$Internet_Tax_dep=="Tax department"|
+                       df$Internet_utilities=="Utilities (WEB, ELMAR)",
+                       "TRUE",
+                       "FALSE"
+)
+
+table(df$Internet_some)
+                       
+```
+
+
 
 
 # Business survey manipulations
@@ -404,6 +433,30 @@ Medium |51-250
 Large |  >250
 
 ```{r}
+# library
+library(treemap)
+ 
+# Create data
+group <- c("Large 2.2%","Medium  4.5%","Small - 14.9%","Micro - 78.4%")
+value <- c(2.2,4.5,14.9,78.4)
+tm_data <- data.frame(group,value)
+ 
+# treemap
+treemap(tm_data,
+            index="group",
+            vSize="value",
+            type="index",
+        fontcolor.labels = "white",
+        border.lwds = "2",
+        border.col = "white",
+        title="",
+        palette = c("#fc8b9b","#F6BC65")
+            )
+```
+
+
+
+```{r}
 BUS_Select$type <- 
   ifelse((BUS_Select$How.many.employees.does.your.business.employ.at.the.moment.>=0)&
            (BUS_Select$How.many.employees.does.your.business.employ.at.the.moment. <= 10),
@@ -418,6 +471,8 @@ ifelse(BUS_Select$How.many.employees.does.your.business.employ.at.the.moment. > 
 table(BUS_Select$type)
 
 ```
+
+
 
 
 ```{r}
