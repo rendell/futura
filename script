@@ -20,6 +20,8 @@ library(Rmisc)
 library(OpenStreetMap)
 library(sf)
 library(treemap)
+library(waffle)
+library(ggplot2)
 ```
 
 ```{r, message=FALSE, warning=FALSE}
@@ -393,21 +395,28 @@ table(df$Internet_utilities)
 table(df$Internet_Other)
 
 df_y<- df%>%
-  filter()
+  filter(Age!="76-111")
   
   
   
-df$Internet_some <- ifelse(df$Internet_Censo=="Censo" | 
-                       df$Internet_Setar=="Communication (Setar)"|
-                       df$Internet_SVB=="Pension (SVB)" |
-                       df$Internet_Tax_dep=="Tax department"|
-                       df$Internet_utilities=="Utilities (WEB, ELMAR)",
+df_y$Internet_some <- ifelse(df_y$Internet_Censo=="Censo" | 
+                       df_y$Internet_Setar=="Communication (Setar)"|
+                       df_y$Internet_SVB=="Pension (SVB)" |
+                       df_y$Internet_Tax_dep=="Tax department"|
+                       df_y$Internet_utilities=="Utilities (WEB, ELMAR)",
                        "TRUE",
                        "FALSE"
 )
 
-table(df$Internet_some)
+table(df_y$Internet_some)
                        
+```
+8. 
+No=126, yes=197
+61% have made purchases online in the last 12 months
+
+```{r}
+table(df_y$Internet_purchase,df_y$Internet_some)
 ```
 
 
@@ -471,6 +480,53 @@ ifelse(BUS_Select$How.many.employees.does.your.business.employ.at.the.moment. > 
 table(BUS_Select$type)
 
 ```
+12
+
+
+```{r}
+df_b%>%
+  filter(What.share.of.employees.are.considered..low.skilled..!=0"\)%>%
+  mean(What.percentage.of.low.skilled.workers.receive.employment.based.training.)
+```
+Bussines Innovation question
+new firms < 3 years.
+
+25/(25+109)*100 = 19%
+```{r}
+df_b$new_firms <- ifelse(df_b$For.how.many.years.has.your.business.been.active.conducting.commercial.activity. < 3,"start-up","established")
+table(df_b$new_firms)
+
+new_old_firms <- c("start-up firms","established firms")
+new_old_firms_values<-c(19,81)
+
+
+new_old <- data.frame(
+  State = c("start-up firms","established firms"),
+  Values = c(19,81),
+  stringsAsFactors = FALSE)
+```
+
+Waffle chart
+```{r}
+Blue.text <- element_text(color = "#00006f")
+```
+
+
+```{r}
+plot_new_old <- ggplot(data = new_old, 
+         aes(fill = State, values = Values)) +
+  geom_waffle(n_rows = 10, size = 0.5, 
+              colour ="#ffffff",
+              flip = TRUE) +
+  scale_fill_manual(values = c("#e7bd42","#00006f")) +
+  coord_equal() +
+  theme_minimal() +
+  theme_enhance_waffle() +
+  labs(title = "% Share new start-ups",
+       subtitle = "N=134",
+       caption = "Cornerstone Economics (2022)")+
+   theme(title = Blue.text, axis.title = Blue.text,text=element_text(family="Franklin Gothic Book"),legend.title = element_blank()
+         )
 
 
 
