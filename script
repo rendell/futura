@@ -36,6 +36,13 @@ GAC<-as_tibble(GAC)
 df_b<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/DE_BS.csv", stringsAsFactors = FALSE)
 df_b<-as_tibble(df_b)
 
+
+#data set pertaining to survey of businesses
+d_7.1<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/7.1.csv", stringsAsFactors = FALSE)
+d_7.1<-as_tibble(d_7.1)
+
+
+
 #requires uploading from the computer untill now have not been able to link to github
 shape<- st_read("GAC_Regios_WGS1984.shp")
 #To add the regions by colour
@@ -527,10 +534,36 @@ plot_new_old <- ggplot(data = new_old,
        caption = "Cornerstone Economics (2022)")+
    theme(title = Blue.text, axis.title = Blue.text,text=element_text(family="Franklin Gothic Book"),legend.title = element_blank()
          )
+```
 
+Does your business digitally deliver services?
+```{r}
+table(df_b$Does.your.business.digitally.deliver.services.across.borders.)
+```
+
+## 7.1
+```{r}
+ggplot(d_7.1, aes(x=`Country`, y=Observations, label=Observations)) + 
+  geom_point(stat='identity', 
+             aes(col=Label), size=6)  +
+  scale_color_manual(name="Compared to average", 
+                     labels = c("Above", "Below"), 
+                     values = c("Positive"="#00ba38", "Negative"="#f8766d")) + 
+  geom_text(color="white", size=2) +
+  labs(subtitle="XY") + 
+  ylim(0, 100) +
+  coord_flip()+
+  theme_classic()+
+  theme(axis.text.x=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank()
+        )
+```
 
 
 
 ```{r}
 write.csv(BUS_Select,"BUS_Select.csv", row.names = FALSE)
 ```
+
+
