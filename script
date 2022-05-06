@@ -9,6 +9,7 @@ output:
 ## Futura colours we will be using:
 Pink: "#fc8b9b" 
 Peach: "#F6BC65"
+aruba blue: "#81d7d3"
 
 
 
@@ -543,27 +544,19 @@ table(df_b$Does.your.business.digitally.deliver.services.across.borders.)
 
 ## 7.1
 ```{r}
-ggplot(d_7.1, aes(x=`Country`, y=Observations, label=Observations)) + 
-  geom_point(stat='identity', 
-             aes(col=Label), size=6)  +
+ggplot(d_7.1, aes(x=reorder(`Country`,Observations), y=Observations, label=Observations)) + 
+  geom_point( aes(col=Label), size=12)  +
+geom_segment(aes(x = Country, y = 44, xend = Country, yend = Observations), colour=d_7.1$X, size=1)+
   scale_color_manual(name="Compared to average", 
-                     labels = c("Above", "Below"), 
-                     values = c("Positive"="#00ba38", "Negative"="#f8766d")) + 
-  geom_text(color="white", size=2) +
-  labs(subtitle="XY") + 
-  ylim(0, 100) +
+                     labels = c("Above", "Below", "Aruba"), 
+                     values = c("Positive"="#fc8b9b", "Negative"="#F6BC65", "Aruba"="#81d7d3")) + 
+  geom_text(color="black", size=3.5) +
+  ylim(20, 70) +
   coord_flip()+
   theme_classic()+
   theme(axis.text.x=element_blank(),
         axis.title.x=element_blank(),
         axis.title.y=element_blank()
-        )
+        )+ geom_hline(yintercept = 44, color = "black", size=1)+ 
+  theme(legend.position="none")
 ```
-
-
-
-```{r}
-write.csv(BUS_Select,"BUS_Select.csv", row.names = FALSE)
-```
-
-
