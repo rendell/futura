@@ -39,6 +39,16 @@ df_b<-as_tibble(df_b)
 
 
 #data set pertaining to survey of businesses
+d_6.1<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/6.1.csv", stringsAsFactors = FALSE)
+d_6.1<-as_tibble(d_6.1)
+
+d_6.2<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/6.2.csv", stringsAsFactors = FALSE)
+d_6.2<-as_tibble(d_6.2)
+
+d_6.4<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/6.4.csv", stringsAsFactors = FALSE)
+d_6.4<-as_tibble(d_6.4)
+
+
 d_7.1<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/7.1.csv", stringsAsFactors = FALSE)
 d_7.1<-as_tibble(d_7.1)
 
@@ -428,6 +438,137 @@ table(df_y$Internet_purchase,df_y$Internet_some)
 ```
 
 
+# 5. Society
+
+## 5.1 Percentage of individuals aged 55-74 using the Internet
+
+no - 21
+yes - 364
+
+no=21/(21+364)*100=5.5%
+Yes = 1-5.5% = 94.5%
+
+```{r}
+table(df_y$access_internet_3_months)
+```
+
+
+
+
+
+# Trust
+
+## 6.1
+Percentage of Internet users experiencing abuse of personal information or privacy violations
+No - 326
+Yes - 28
+Not an internet user - 31
+tot - 354
+28/354 = 7.9%
+
+
+No - 331
+Yes - 29
+Not an internet user - 51
+tot - 360
+29/360=8.1%
+
+
+```{r}
+table(df_y$Experience_privacy_violations) # this is where old people are already filtered out
+table(df$Experience_privacy_violations)
+
+ggplot(d_6.1, aes(x=reorder(`Country`,Observations), y=Observations, label=Observations)) + 
+  geom_point( aes(col=Label), size=12)  +
+geom_segment(aes(x = Country, y = 3.4, xend = Country, yend = Observations), colour=d_6.1$Colour, size=1)+
+  scale_color_manual(name="Compared to average", 
+                     labels = c("Above", "Below", "Aruba"), 
+                     values = c("Positive"="#fc8b9b", "Negative"="#F6BC65", "Aruba"="#81d7d3")) + 
+  geom_text(color="black", size=3.5) +
+  ylim(0, 10) +
+  coord_flip()+
+  theme_classic()+
+  theme(axis.text.x=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.line.x = element_blank(),
+        axis.ticks = element_blank(),
+        legend.position="none",
+        axis.text.y = element_text(color="black", 
+                           size=12)
+        )+ 
+  geom_hline(yintercept = 3.35, color = "black", size=0.5)
+```
+
+
+## 6.2
+Percentage of individuals not buying online due to payment security concerns
+```{r}
+table(df$Internet_purchase_reason)
+
+ggplot(d_6.2, aes(x=reorder(`Country`,Observations), y=Observations, label=Observations)) + 
+  geom_point( aes(col=Label), size=12)  +
+geom_segment(aes(x = Country, y = 27.2, xend = Country, yend = Observations), colour=d_6.2$Colour, size=1)+
+  scale_color_manual(name="Compared to average", 
+                     labels = c("Above", "Below", "Aruba"), 
+                     values = c("Positive"="#fc8b9b", "Negative"="#F6BC65", "Aruba"="#81d7d3")) + 
+  geom_text(color="black", size=3.5) +
+  ylim(0, 65) +
+  coord_flip()+
+  theme_classic()+
+  theme(axis.text.x=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.line.x = element_blank(),
+        axis.ticks = element_blank(),
+        legend.position="none",
+        axis.text.y = element_text(color="black", 
+                           size=12)
+        )+ 
+  geom_hline(yintercept = 27.2, color = "black", size=0.5)
+```
+
+## 6.3 
+Percentage of individuals not buying online due to concerns about returning products
+
+Inconsistencies with very high observations in the OECD made me drop this from the analaysis. 
+```{r}
+
+```
+
+## 6.4
+Percentage of businesses in which ICT security and data protection tasks are mainly performed by own employees
+
+No - 60
+Yes - 74
+No = 60/(60+74)= 45.0%
+Yes 1-45% = 55%
+```{r}
+table(df_b$Are.the.ICT.security.and.data.protection.tasks.of.your.business.mainly.performed.by.own.employees.)
+
+ggplot(d_6.4, aes(x=reorder(`Country`,Observations), y=Observations, label=Observations)) + 
+  geom_point( aes(col=Label), size=12)  +
+geom_segment(aes(x = Country, y = 23.7, xend = Country, yend = Observations), colour=d_6.4$Colour, size=1)+
+  scale_color_manual(name="Compared to average", 
+                     labels = c("Above", "Below", "Aruba"), 
+                     values = c("Positive"="#fc8b9b", "Negative"="#F6BC65", "Aruba"="#81d7d3")) + 
+  geom_text(color="black", size=3.5) +
+  ylim(15, 55) +
+  coord_flip()+
+  theme_classic()+
+  theme(axis.text.x=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.line.x = element_blank(),
+        axis.ticks = element_blank(),
+        legend.position="none",
+        axis.text.y = element_text(color="black", 
+                           size=12)
+        )+ 
+  geom_hline(yintercept = 23.7, color = "black", size=0.5)
+```
+
+
 
 
 # Business survey manipulations
@@ -556,7 +697,25 @@ geom_segment(aes(x = Country, y = 44, xend = Country, yend = Observations), colo
   theme_classic()+
   theme(axis.text.x=element_blank(),
         axis.title.x=element_blank(),
-        axis.title.y=element_blank()
-        )+ geom_hline(yintercept = 44, color = "black", size=1)+ 
-  theme(legend.position="none")
+        axis.title.y=element_blank(),
+        axis.line.x = element_blank(),
+        axis.ticks = element_blank(),
+        legend.position="none",
+        axis.text.y = element_text(color="black", 
+                           size=12)
+        )+ 
+  geom_hline(yintercept = 44, color = "black", size=0.5)
 ```
+
+
+
+```{r}
+write.csv(BUS_Select,"BUS_Select.csv", row.names = FALSE)
+```
+
+
+
+
+
+
+
