@@ -475,6 +475,38 @@ geom_segment(aes(x = Country, y = 76.8, xend = Country, yend = Observations), co
 ```
 
 
+# Society
+
+## 5.3 Women as a share of all 16–24-year-olds who can program
+
+defined age group: 12-25
+
+NO -female - 34
+No -male - 25
+
+YES - female - 16
+YES - male - 15
+
+Total female: 50
+Total male: 40
+
+Yes female: 16/50= 32%
+Yes male: 15/40=  38%
+
+```{r}
+table(df$Age,df$Gender,df$Proficiency_coding)
+```
+
+## 5.4
+
+Female: 201/(201+20)= 91%
+Male: 171/(18+171)= 90%
+Difference -1%
+
+```{r}
+table(df$Gender,df$access_internet_3_months)
+```
+
 
 
 
