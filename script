@@ -37,8 +37,9 @@ GAC<-as_tibble(GAC)
 df_b<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/DE_BS.csv", stringsAsFactors = FALSE)
 df_b<-as_tibble(df_b)
 
+d_5.1<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/5.1.csv", stringsAsFactors = FALSE)
+d_5.1<-as_tibble(d_5.1)
 
-#data set pertaining to survey of businesses
 d_6.1<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/6.1.csv", stringsAsFactors = FALSE)
 d_6.1<-as_tibble(d_6.1)
 
@@ -450,6 +451,27 @@ Yes = 1-5.5% = 94.5%
 
 ```{r}
 table(df_y$access_internet_3_months)
+
+ggplot(d_5.1, aes(x=reorder(`Country`,Observations), y=Observations, label=Observations)) + 
+  geom_point( aes(col=Label), size=12)  +
+geom_segment(aes(x = Country, y = 76.8, xend = Country, yend = Observations), colour=d_5.1$Colour, size=1)+
+  scale_color_manual(name="Compared to average", 
+                     labels = c("Above", "Below", "Aruba"), 
+                     values = c("Positive"="#fc8b9b", "Negative"="#F6BC65", "Aruba"="#81d7d3")) + 
+  geom_text(color="black", size=3.5) +
+  ylim(40, 100) +
+  coord_flip()+
+  theme_classic()+
+  theme(axis.text.x=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.line.x = element_blank(),
+        axis.ticks = element_blank(),
+        legend.position="none",
+        axis.text.y = element_text(color="black", 
+                           size=12)
+        )+ 
+  geom_hline(yintercept = 76.8, color = "black", size=0.5)
 ```
 
 
@@ -712,10 +734,3 @@ geom_segment(aes(x = Country, y = 44, xend = Country, yend = Observations), colo
 ```{r}
 write.csv(BUS_Select,"BUS_Select.csv", row.names = FALSE)
 ```
-
-
-
-
-
-
-
