@@ -52,6 +52,17 @@ d_2.2<-as_tibble(d_2.2)
 d_2.3<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/2.3.csv", stringsAsFactors = FALSE)
 d_2.3<-as_tibble(d_2.3)
 
+d_2.4<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/2.4.csv", stringsAsFactors = FALSE)
+d_2.4<-as_tibble(d_2.4)
+
+d_2.5<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/2.5.csv", stringsAsFactors = FALSE)
+d_2.5<-as_tibble(d_2.5)
+
+d_2.5_A<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/2.5_A.csv", stringsAsFactors = FALSE)
+d_2.5_A<-as_tibble(d_2.5_A)
+
+d_3.2<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/3.2.csv", stringsAsFactors = FALSE)
+d_3.2<-as_tibble(d_3.2)
 
 d_5.1<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/5.1.csv", stringsAsFactors = FALSE)
 d_5.1<-as_tibble(d_5.1)
@@ -388,6 +399,7 @@ No=126, yes=197
 
 ```{r}
 table(df_y$Internet_purchase,df_y$Internet_some)
+
 ```
 
 # Access
@@ -588,6 +600,179 @@ geom_segment(aes(x = Country, y = 69.9, xend = Country, yend = Observations), co
                            size=12)
         )+ 
   geom_hline(yintercept = 69.9, color = "black", size=0.5)
+```
+
+## 2.4 Share of small businesses making e-commerce sales in the last 12 months
+Micro and small grouped together:
+
+No 88+14=102
+Yes 17+6=23
+=23/102*100=23%
+
+```{r}
+table(BUS_Select$Has.your.businesses.made.e.commerce.sales.that.sell.across.borders..the.last.year.,BUS_Select$type)
+```
+
+```{r}
+ggplot(d_2.4, aes(x=reorder(`Country`,Observations), y=Observations, label=Observations)) + 
+  geom_point( aes(col=Label), size=12)  +
+geom_segment(aes(x = Country, y = 22.1, xend = Country, yend = Observations), colour=d_2.4$Colour, size=1)+
+  scale_color_manual(name="Compared to average", 
+                     labels = c("Above", "Below", "Aruba"), 
+                     values = c("Positive"="#fc8b9b", "Negative"="#F6BC65", "Aruba"="#81d7d3")) + 
+  geom_text(color="black", size=3.5) +
+  ylim(0, 60) +
+  coord_flip()+
+  theme_classic()+
+  theme(axis.text.x=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.line.x = element_blank(),
+        axis.ticks = element_blank(),
+        legend.position="none",
+        axis.text.y = element_text(color="black", 
+                           size=12)
+        )+ 
+  geom_hline(yintercept = 22.1, color = "black", size=0.5)
+```
+
+## 2.5 Share of businesses with a web presence
+YES - 121
+No - 13
+121/(13+121)=
+
+
+Business website: 57, 77
+FB page: 30,104
+Linkedin: 83,51
+Twitter: 117, 17
+Instagram: 60, 74
+TikTok: 3
+Pinterest: 1
+```{r}
+table(df_b$Does.your.business.offer.the.following.web.presence....Business.website)
+table(df_b$Does.your.business.offer.the.following.web.presence....Facebook.page)
+table(df_b$Does.your.business.offer.the.following.web.presence....Linkedin)
+table(df_b$Does.your.business.offer.the.following.web.presence....Twitter)
+table(df_b$Does.your.business.offer.the.following.web.presence....Instagram)
+table(df_b$Does.your.business.offer.the.following.web.presence....None.of.the.above)
+table(df_b$Does.your.business.offer.the.following.web.presence....Other...Other)
+
+
+df_b$web.presence <- ifelse(df_b$Does.your.business.offer.the.following.web.presence....Business.website=="Business website" | 
+                       df_b$Does.your.business.offer.the.following.web.presence....Facebook.page=="Facebook page"|
+                       df_b$Does.your.business.offer.the.following.web.presence....Linkedin=="Linkedin" |
+                       df_b$Does.your.business.offer.the.following.web.presence....Twitter=="Twitter"|
+                       df_b$Does.your.business.offer.the.following.web.presence....Instagram=="Instagram",
+                       "TRUE",
+                       "FALSE"
+)
+
+table(df_b$web.presence)
+
+```
+
+```{r}
+# Barplot
+ggplot(d_2.5_A, aes(x=reorder(`Media`, Share), y=Share)) + 
+  geom_bar(stat = "identity", fill="#fc8b9b") +
+  coord_flip()+
+  geom_text(aes(label = Share), hjust = 1, size=10)+
+  theme_classic()+
+  theme(axis.text.x=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.line.x = element_blank(),
+        axis.line.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.text.y = element_text(color="black", 
+                           size=24),
+        legend.position="none")
+```
+
+```{r}
+ggplot(d_2.5, aes(x=reorder(`Country`,Observations), y=Observations, label=Observations)) + 
+  geom_point( aes(col=Label), size=12)  +
+geom_segment(aes(x = Country, y = 74.1, xend = Country, yend = Observations), colour=d_2.5$Colour, size=1)+
+  scale_color_manual(name="Compared to average", 
+                     labels = c("Above", "Below", "Aruba"), 
+                     values = c("Positive"="#fc8b9b", "Negative"="#F6BC65", "Aruba"="#81d7d3")) + 
+  geom_text(color="black", size=3.5) +
+  ylim(25, 100) +
+  coord_flip()+
+  theme_classic()+
+  theme(axis.text.x=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.line.x = element_blank(),
+        axis.ticks = element_blank(),
+        legend.position="none",
+        axis.text.y = element_text(color="black", 
+                           size=12)
+        )+ 
+  geom_hline(yintercept = 74.1, color = "black", size=0.5)
+```
+
+
+
+
+
+## 2.6 Share of businesses purchasing cloud services
+```{r}
+prop.table(table(df_b$Does.your.business.use.cloud.services.))
+```
+```{r}
+
+```
+
+## 3.2 Share of start-up firms (up to 2 years old) in the business population
+
+new firms < 3 years.
+
+25/(25+109)*100 = 19%
+```{r}
+df_b$new_firms <- ifelse(df_b$For.how.many.years.has.your.business.been.active.conducting.commercial.activity. < 3,"start-up","established")
+table(df_b$new_firms)
+
+new_old_firms <- c("start-up firms","established firms")
+new_old_firms_values<-c(19,81)
+
+
+new_old <- data.frame(
+  State = c("start-up firms","established firms"),
+  Values = c(19,81),
+  stringsAsFactors = FALSE)
+```
+
+```{r}
+ggplot(d_3.2, aes(x=reorder(`Country`,Observations), y=Observations, label=Observations)) + 
+  geom_point( aes(col=Label), size=12)  +
+geom_segment(aes(x = Country, y = 25.5, xend = Country, yend = Observations), colour=d_3.2$Colour, size=1)+
+  scale_color_manual(name="Compared to average", 
+                     labels = c("Above", "Below", "Aruba"), 
+                     values = c("Positive"="#fc8b9b", "Negative"="#F6BC65", "Aruba"="#81d7d3")) + 
+  geom_text(color="black", size=3.5) +
+  ylim(10, 40) +
+  coord_flip()+
+  theme_classic()+
+  theme(axis.text.x=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.line.x = element_blank(),
+        axis.ticks = element_blank(),
+        legend.position="none",
+        axis.text.y = element_text(color="black", 
+                           size=12)
+        )+ 
+  geom_hline(yintercept = 25.5, color = "black", size=0.5)
+```
+
+# 4 Jobs
+
+## 4.1 Workers recieving employment-based traning, as a percentage of total employment
+
+```{r}
+prop.table(table(df_b$))
 ```
 
 
@@ -801,7 +986,9 @@ df_b<- df_b%>%
 BUS_Select <- df_b%>%
   select(What.is.the.name.of.your.organization.,
          How.many.employees.does.your.business.employ.at.the.moment.,
-         Which.sector.best.describes.your.principle.economic.activity.)
+         Which.sector.best.describes.your.principle.economic.activity.,
+         Has.your.businesses.made.e.commerce.sales.that.sell.across.borders..the.last.year.
+         )
 ```
 
 Micro | 1-10
@@ -856,23 +1043,7 @@ df_b%>%
   filter(What.share.of.employees.are.considered..low.skilled..!=0"\)%>%
   mean(What.percentage.of.low.skilled.workers.receive.employment.based.training.)
 ```
-Bussines Innovation question
-new firms < 3 years.
 
-25/(25+109)*100 = 19%
-```{r}
-df_b$new_firms <- ifelse(df_b$For.how.many.years.has.your.business.been.active.conducting.commercial.activity. < 3,"start-up","established")
-table(df_b$new_firms)
-
-new_old_firms <- c("start-up firms","established firms")
-new_old_firms_values<-c(19,81)
-
-
-new_old <- data.frame(
-  State = c("start-up firms","established firms"),
-  Values = c(19,81),
-  stringsAsFactors = FALSE)
-```
 
 Waffle chart
 ```{r}
