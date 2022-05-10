@@ -65,6 +65,9 @@ d_2.5_A<-as_tibble(d_2.5_A)
 d_3.2<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/3.2.csv", stringsAsFactors = FALSE)
 d_3.2<-as_tibble(d_3.2)
 
+d_4.1<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/4.1.csv", stringsAsFactors = FALSE)
+d_4.1<-as_tibble(d_4.1)
+
 d_5.1<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/5.1.csv", stringsAsFactors = FALSE)
 d_5.1<-as_tibble(d_5.1)
 
@@ -720,10 +723,6 @@ geom_segment(aes(x = Country, y = 74.1, xend = Country, yend = Observations), co
   geom_hline(yintercept = 74.1, color = "black", size=0.5)
 ```
 
-
-
-
-
 ## 2.6 Share of businesses purchasing cloud services
 ```{r, eval=FALSE}
 prop.table(table(df_b$Does.your.business.use.cloud.services.))
@@ -787,7 +786,16 @@ prop.table(table(df_b$Does.your.business..as.a.means.of.payment..accept.Bitcoin.
 # 4 Jobs
 
 ## 4.1 Workers recieving employment-based traning, as a percentage of total employment
-61%
+total mean = 61%
+Share
+low skilled workers    = 10%
+Medium skilled workers = 20%
+high skilled workers   = 70%
+low skilled workers    = 61%
+Medium skilled workers = 76%
+High skilled workers   = 83%
+
+(0.1*61)+(0.2*76)+(0.7*83) = 79%
 
 ```{r, eval=FALSE}
 df_b$What.share.of.employees.are.considered..high.skilled..<-as.numeric(df_b$What.share.of.employees.are.considered..high.skilled..)
@@ -819,13 +827,75 @@ df_ba$percent.employment.training<- (df_ba$What.share.of.employees.are.considere
         df_ba$What.percentage.of.medium.skilled.workers.receive.employment.based.training.)/100
   
 mean(df_ba$percent.employment.training)  
+mean(df_ba$What.percentage.of.low.skilled.workers.receive.employment.based.training., na.rm = TRUE)
+mean(df_ba$What.percentage.of.medium.skilled.workers.receive.employment.based.training., na.rm = TRUE)
+mean(df_ba$What.percentage.of.high.skilled.workers.receive.employment.based.training., na.rm = TRUE)
 
 
+df_bL<-
+  filter(df_ba,What.percentage.of.low.skilled.workers.receive.employment.based.training. > 0)
+mean(df_bL$What.percentage.of.low.skilled.workers.receive.employment.based.training., na.rm = TRUE)
 
+df_bM<-
+  filter(df_ba,What.percentage.of.medium.skilled.workers.receive.employment.based.training. > 0)
+mean(df_bM$What.percentage.of.medium.skilled.workers.receive.employment.based.training., na.rm = TRUE)
+
+df_bH<-
+  filter(df_ba,What.percentage.of.high.skilled.workers.receive.employment.based.training. > 0)
+mean(df_bH$What.percentage.of.high.skilled.workers.receive.employment.based.training., na.rm = TRUE)
+```
+
+```{r, eval=FALSE}
+# Barplot
+
+gg_skill<- c(61,76,83)
+gg_label<- c("Low skilled","Medium skilled","High skilled")
+gg_set <- data.frame(gg_skill, gg_label)
+
+ggplot(gg_set, aes(x=reorder(`gg_label`, gg_skill), y=gg_skill)) + 
+  geom_bar(stat ="identity", fill="#fc8b9b") +
+  coord_flip()+
+  geom_text(aes(label = gg_skill), hjust = 1, size=10)+
+  theme_classic()+
+  theme(axis.text.x=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.line.x = element_blank(),
+        axis.line.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.text.y = element_text(color="black", 
+                           size=24),
+        legend.position="none")
+```
+
+```{r}
+ggplot(d_4.1, aes(x=reorder(`Country`,Observations), y=Observations, label=Observations)) + 
+  geom_point( aes(col=Label), size=12)  +
+geom_segment(aes(x = Country, y = 58, xend = Country, yend = Observations), colour=d_4.1$Colour, size=1)+
+  scale_color_manual(name="Compared to average", 
+                     labels = c("Above", "Below", "Aruba"), 
+                     values = c("Positive"="#fc8b9b", "Negative"="#F6BC65", "Aruba"="#81d7d3")) + 
+  geom_text(color="black", size=3.5) +
+  ylim(30, 80) +
+  coord_flip()+
+  theme_classic()+
+  theme(axis.text.x=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.line.x = element_blank(),
+        axis.ticks = element_blank(),
+        legend.position="none",
+        axis.text.y = element_text(color="black", 
+                           size=12)
+        )+ 
+  geom_hline(yintercept = 58, color = "black", size=0.5)
 ```
 
 
 # 4.2: ICT task-intensive jobs as a percentage of total employment
+```{r}
+write.csv(BUS_Select, "BUS_Select.csv")
+```
 
 
 
@@ -1044,7 +1114,8 @@ BUS_Select <- df_b%>%
   select(What.is.the.name.of.your.organization.,
          How.many.employees.does.your.business.employ.at.the.moment.,
          Which.sector.best.describes.your.principle.economic.activity.,
-         Has.your.businesses.made.e.commerce.sales.that.sell.across.borders..the.last.year.
+         Has.your.businesses.made.e.commerce.sales.that.sell.across.borders..the.last.year.,
+         On.average..what.percentage.of.occupational.tasks.of.employees.are.ICT.intensive.
          )
 ```
 
