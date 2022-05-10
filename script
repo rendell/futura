@@ -13,7 +13,7 @@ aruba blue: "#81d7d3"
 
 
 
-```{r, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE, eval=FALSE}
 library(tidyverse)
 library(readr)
 library(ggplot2)
@@ -25,7 +25,7 @@ library(waffle)
 library(ggplot2)
 ```
 
-```{r, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE, eval=FALSE}
 #data set pertaining to survey of individuals
 df<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/combined.csv")
 df<-as_tibble(df)
@@ -34,8 +34,9 @@ GAC<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/GAC.csv", 
 GAC<-as_tibble(GAC)
 
 #data set pertaining to survey of businesses
-df_b<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/DE_BS.csv", stringsAsFactors = FALSE)
-df_b<-as_tibble(df_b)
+df_b<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/DE_BS.csv", stringsAsFactors = FALSE)%>% 
+  as_tibble()%>%
+  filter(CompletionStatus=="Completed")
 
 d_1.2<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/1.2.csv", stringsAsFactors = FALSE)
 d_1.2<-as_tibble(d_1.2)
@@ -79,9 +80,9 @@ d_6.4<-as_tibble(d_6.4)
 
 d_7.1<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/7.1.csv", stringsAsFactors = FALSE)
 d_7.1<-as_tibble(d_7.1)
+```
 
-
-
+```{r, eval=FALSE, include=FALSE}
 #requires uploading from the computer untill now have not been able to link to github
 shape<- st_read("GAC_Regios_WGS1984.shp")
 #To add the regions by colour
@@ -96,11 +97,11 @@ coord_sf() + theme(panel.background = element_blank(),
         axis.ticks.y=element_blank()  #remove y axis ticks
                    )+ ggtitle("Figure X: Broadband divide")+ 
   labs(caption = "Source: Cornerstone Economics 2022")
-
-
 ```
 
-```{r}
+
+
+```{r,eval=FALSE}
 df          <- left_join(df,GAC,
                                     by=c("Street"="Straatnaam"))
 df$x <- df$POINT_X
@@ -108,7 +109,7 @@ df$y <- df$POINT_Y
 ```
 
 #Actual mapping
-```{r}
+```{r, eval=FALSE}
 # extract map
 library(ggmap)
 
@@ -350,7 +351,7 @@ ggmap(aruba11) + # the base map
 ```
 
 ## Coalesce
-```{r, message=False}
+```{r, message=FALSE, eval=FALSE}
 p1<- ggplot(df, aes(Age, fill=Gender))+
   geom_bar(stat="count")+
   theme_classic()
@@ -366,7 +367,7 @@ p2<-ggplot(data=df_age, aes(x=Age, y=Percentage)) +
 ```
 
 # gender
-```{r}
+```{r, eval=FALSE}
 p1<- df%>%
   filter(Gender !="Prefer not to disclose")%>%
   filter(Age !="")%>%
@@ -375,11 +376,11 @@ p1<- df%>%
   theme_classic()
 ```
 
-```{r}
+```{r, eval=FALSE}
 multiplot(p1, p2, cols=2)
 ```
 
-```{r}
+```{r, eval=FALSE}
 #only display two decimal places
 options(digits=2)
 
@@ -397,9 +398,8 @@ prop.table(table(df$Age, df$Time))
 No=126, yes=197
 61% have made purchases online in the last 12 months
 
-```{r}
+```{r, eval=FALSE}
 table(df_y$Internet_purchase,df_y$Internet_some)
-
 ```
 
 # Access
@@ -407,14 +407,15 @@ table(df_y$Internet_purchase,df_y$Internet_some)
 ## 1.2 Share of households with broadband connection
 interpretation:
 
+
 308+2+3+3+2+7=325
 total: 45+2+308+3+3+2+15+7=385
 325/385=84%
-```{r}
+```{r, eval=FALSE}
 table(df_y$Internet_home_cable)
 ```
 
-```{r}
+```{r, eval=FALSE}
 ggplot(d_1.2, aes(x=reorder(`Country`,Observations), y=Observations, label=Observations)) + 
   geom_point( aes(col=Label), size=12)  +
 geom_segment(aes(x = Country, y = 86.6, xend = Country, yend = Observations), colour=d_1.2$Colour, size=1)+
@@ -437,6 +438,12 @@ geom_segment(aes(x = Country, y = 86.6, xend = Country, yend = Observations), co
   geom_hline(yintercept = 86.6, color = "black", size=0.5)
 ```
 
+Does your business have a broadband connection?
+```{r}
+prop.table(table(df_b$Does.your.business.have.its.own.broadband.internet.connection.))
+```
+
+
 
 ## 1.3 Disparity in broadband uptake between urban and rural households
 
@@ -449,12 +456,12 @@ Noord / Tanki Leendert
 Divide:
 37.7%-32.6% = 5.1%
 
-```{r}
+```{r, eval=FALSE}
 table(df$Regio, df$Internet_home_cable)
 table(df$Regio, df$Internet_home_no_access)
 ```
 
-```{r}
+```{r, eval=FALSE}
 ggplot(d_1.3, aes(x=reorder(`Country`,Observations), y=Observations, label=Observations)) + 
   geom_point( aes(col=Label), size=12)  +
 geom_segment(aes(x = Country, y = 8.1, xend = Country, yend = Observations), colour=d_1.3$Colour, size=1)+
@@ -483,7 +490,7 @@ geom_segment(aes(x = Country, y = 8.1, xend = Country, yend = Observations), col
 no - 42
 yes - 92
 share=92/(42+92)=69%
-```{r}
+```{r, eval=FALSE}
 table(df_b$Does.your.business.have.its.own.broadband.internet.connection.)
 ```
 
@@ -491,11 +498,11 @@ table(df_b$Does.your.business.have.its.own.broadband.internet.connection.)
 
 54/411=13%
 1-13% = 87%
-```{r}
+```{r, eval=FALSE}
 table(df$Often_email)
 ```
 
-```{r}
+```{r, eval=FALSE}
 ggplot(d_2.1, aes(x=reorder(`Country`,Observations), y=Observations, label=Observations)) + 
   geom_point( aes(col=Label), size=12)  +
 geom_segment(aes(x = Country, y = 85.6, xend = Country, yend = Observations), colour=d_2.1$Colour, size=1)+
@@ -522,7 +529,7 @@ geom_segment(aes(x = Country, y = 85.6, xend = Country, yend = Observations), co
 ## 2.2 Share of individuals using the internet to interact with public authorities
 
 Uptake of digital government services
-```{r}
+```{r, eval=FALSE}
 table(df$Internet_Censo)
 table(df$Internet_Setar)
 table(df$Internet_SVB)
@@ -548,7 +555,7 @@ table(df_y$Internet_some)
                        
 ```
 
-```{r}
+```{r, eval=FALSE}
 ggplot(d_2.2, aes(x=reorder(`Country`,Observations), y=Observations, label=Observations)) + 
   geom_point( aes(col=Label), size=12)  +
 geom_segment(aes(x = Country, y = 60.2, xend = Country, yend = Observations), colour=d_2.2$Colour, size=1)+
@@ -575,11 +582,11 @@ geom_segment(aes(x = Country, y = 60.2, xend = Country, yend = Observations), co
 no -176
 yes - 209
 209/(176+209)= 54%
-```{r}
+```{r, eval=FALSE}
 table(df_y$Internet_purchase)
 ```
 
-```{r}
+```{r, eval=FALSE}
 ggplot(d_2.3, aes(x=reorder(`Country`,Observations), y=Observations, label=Observations)) + 
   geom_point( aes(col=Label), size=12)  +
 geom_segment(aes(x = Country, y = 69.9, xend = Country, yend = Observations), colour=d_2.3$Colour, size=1)+
@@ -609,11 +616,11 @@ No 88+14=102
 Yes 17+6=23
 =23/102*100=23%
 
-```{r}
+```{r, eval=FALSE}
 table(BUS_Select$Has.your.businesses.made.e.commerce.sales.that.sell.across.borders..the.last.year.,BUS_Select$type)
 ```
 
-```{r}
+```{r, eval=FALSE}
 ggplot(d_2.4, aes(x=reorder(`Country`,Observations), y=Observations, label=Observations)) + 
   geom_point( aes(col=Label), size=12)  +
 geom_segment(aes(x = Country, y = 22.1, xend = Country, yend = Observations), colour=d_2.4$Colour, size=1)+
@@ -649,7 +656,7 @@ Twitter: 117, 17
 Instagram: 60, 74
 TikTok: 3
 Pinterest: 1
-```{r}
+```{r, eval=FALSE}
 table(df_b$Does.your.business.offer.the.following.web.presence....Business.website)
 table(df_b$Does.your.business.offer.the.following.web.presence....Facebook.page)
 table(df_b$Does.your.business.offer.the.following.web.presence....Linkedin)
@@ -672,7 +679,7 @@ table(df_b$web.presence)
 
 ```
 
-```{r}
+```{r, eval=FALSE}
 # Barplot
 ggplot(d_2.5_A, aes(x=reorder(`Media`, Share), y=Share)) + 
   geom_bar(stat = "identity", fill="#fc8b9b") +
@@ -690,7 +697,7 @@ ggplot(d_2.5_A, aes(x=reorder(`Media`, Share), y=Share)) +
         legend.position="none")
 ```
 
-```{r}
+```{r, eval=FALSE}
 ggplot(d_2.5, aes(x=reorder(`Country`,Observations), y=Observations, label=Observations)) + 
   geom_point( aes(col=Label), size=12)  +
 geom_segment(aes(x = Country, y = 74.1, xend = Country, yend = Observations), colour=d_2.5$Colour, size=1)+
@@ -718,19 +725,21 @@ geom_segment(aes(x = Country, y = 74.1, xend = Country, yend = Observations), co
 
 
 ## 2.6 Share of businesses purchasing cloud services
-```{r}
+```{r, eval=FALSE}
 prop.table(table(df_b$Does.your.business.use.cloud.services.))
 ```
-```{r}
+```{r, eval=FALSE}
 
 ```
 
-## 3.2 Share of start-up firms (up to 2 years old) in the business population
+# Innovation
+
+## 3.1 Share of start-up firms (up to 2 years old) in the business population
 
 new firms < 3 years.
 
 25/(25+109)*100 = 19%
-```{r}
+```{r, eval=FALSE}
 df_b$new_firms <- ifelse(df_b$For.how.many.years.has.your.business.been.active.conducting.commercial.activity. < 3,"start-up","established")
 table(df_b$new_firms)
 
@@ -744,7 +753,7 @@ new_old <- data.frame(
   stringsAsFactors = FALSE)
 ```
 
-```{r}
+```{r, eval=FALSE}
 ggplot(d_3.2, aes(x=reorder(`Country`,Observations), y=Observations, label=Observations)) + 
   geom_point( aes(col=Label), size=12)  +
 geom_segment(aes(x = Country, y = 25.5, xend = Country, yend = Observations), colour=d_3.2$Colour, size=1)+
@@ -767,19 +776,35 @@ geom_segment(aes(x = Country, y = 25.5, xend = Country, yend = Observations), co
   geom_hline(yintercept = 25.5, color = "black", size=0.5)
 ```
 
+## 3.2
+Bitcoin
+```{r}
+prop.table(table(df_b$Does.your.business..as.a.means.of.payment..accept.Bitcoin.or.other.cryptocurrency.))
+```
+
+
+
 # 4 Jobs
 
 ## 4.1 Workers recieving employment-based traning, as a percentage of total employment
 
-```{r}
+```{r, eval=FALSE}
 prop.table(table(df_b$))
 ```
+
+
+# 4.2: ICT task-intensive jobs as a percentage of total employment
 
 
 
 # 5. Society
 
 ## 5.1 Percentage of individuals aged 55-74 using the Internet
+```{r}
+table(df$Age, df$access_internet_3_months)
+```
+
+
 
 no - 21
 yes - 364
@@ -787,7 +812,7 @@ yes - 364
 no=21/(21+364)*100=5.5%
 Yes = 1-5.5% = 94.5%
 
-```{r}
+```{r, eval=FALSE}
 table(df_y$access_internet_3_months)
 
 ggplot(d_5.1, aes(x=reorder(`Country`,Observations), y=Observations, label=Observations)) + 
@@ -831,7 +856,7 @@ Total male: 40
 Yes female: 16/50= 32%
 Yes male: 15/40=  38%
 
-```{r}
+```{r, eval=FALSE}
 table(df$Age,df$Gender,df$Proficiency_coding)
 ```
 
@@ -841,7 +866,7 @@ Female: 201/(201+20)= 91%
 Male: 171/(18+171)= 90%
 Difference -1%
 
-```{r}
+```{r, eval=FALSE}
 table(df$Gender,df$access_internet_3_months)
 ```
 
@@ -861,7 +886,7 @@ total: 33+1+155+13+76+26=280
 once a week or more: 33+13+26=72
 72/280=26%
 
-```{r}
+```{r, eval=FALSE}
 table(df_y$Frequency_work_from_home_digital_devices)
 ```
 
@@ -883,7 +908,7 @@ tot - 360
 29/360=8.1%
 
 
-```{r}
+```{r, eval=FALSE}
 table(df_y$Experience_privacy_violations) # this is where old people are already filtered out
 table(df$Experience_privacy_violations)
 
@@ -912,7 +937,7 @@ geom_segment(aes(x = Country, y = 3.4, xend = Country, yend = Observations), col
 
 ## 6.2
 Percentage of individuals not buying online due to payment security concerns
-```{r}
+```{r, eval=FALSE}
 table(df$Internet_purchase_reason)
 
 ggplot(d_6.2, aes(x=reorder(`Country`,Observations), y=Observations, label=Observations)) + 
@@ -949,7 +974,7 @@ No - 60
 Yes - 74
 No = 60/(60+74)= 45.0%
 Yes 1-45% = 55%
-```{r}
+```{r, eval=FALSE}
 table(df_b$Are.the.ICT.security.and.data.protection.tasks.of.your.business.mainly.performed.by.own.employees.)
 
 ggplot(d_6.4, aes(x=reorder(`Country`,Observations), y=Observations, label=Observations)) + 
@@ -978,7 +1003,7 @@ geom_segment(aes(x = Country, y = 23.7, xend = Country, yend = Observations), co
 # Business survey manipulations
 
 ## Data cleaning
-```{r}
+```{r, eval=FALSE}
 df_b<- df_b%>%
   filter(CompletionStatus !="Partially Completed")
 
@@ -996,7 +1021,7 @@ Small | 11-50
 Medium |51-250
 Large |  >250
 
-```{r}
+```{r, eval=FALSE}
 # library
 library(treemap)
  
@@ -1020,7 +1045,7 @@ treemap(tm_data,
 
 
 
-```{r}
+```{r, eval=FALSE}
 BUS_Select$type <- 
   ifelse((BUS_Select$How.many.employees.does.your.business.employ.at.the.moment.>=0)&
            (BUS_Select$How.many.employees.does.your.business.employ.at.the.moment. <= 10),
@@ -1038,7 +1063,7 @@ table(BUS_Select$type)
 12
 
 
-```{r}
+```{r, eval=FALSE}
 df_b%>%
   filter(What.share.of.employees.are.considered..low.skilled..!=0"\)%>%
   mean(What.percentage.of.low.skilled.workers.receive.employment.based.training.)
@@ -1046,11 +1071,11 @@ df_b%>%
 
 
 Waffle chart
-```{r}
+```{r, eval=FALSE}
 Blue.text <- element_text(color = "#00006f")
 ```
 
-```{r}
+```{r, eval=FALSE}
 plot_new_old <- ggplot(data = new_old, 
          aes(fill = State, values = Values)) +
   geom_waffle(n_rows = 10, size = 0.5, 
@@ -1068,12 +1093,12 @@ plot_new_old <- ggplot(data = new_old,
 ```
 
 Does your business digitally deliver services?
-```{r}
+```{r, eval=FALSE}
 table(df_b$Does.your.business.digitally.deliver.services.across.borders.)
 ```
 
 ## 7.1
-```{r}
+```{r, eval=FALSE}
 ggplot(d_7.1, aes(x=reorder(`Country`,Observations), y=Observations, label=Observations)) + 
   geom_point( aes(col=Label), size=12)  +
 geom_segment(aes(x = Country, y = 44, xend = Country, yend = Observations), colour=d_7.1$X, size=1)+
@@ -1096,6 +1121,7 @@ geom_segment(aes(x = Country, y = 44, xend = Country, yend = Observations), colo
   geom_hline(yintercept = 44, color = "black", size=0.5)
 ```
 
-```{r}
+```{r, eval=FALSE
+}
 write.csv(BUS_Select,"BUS_Select.csv", row.names = FALSE)
 ```
