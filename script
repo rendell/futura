@@ -787,9 +787,41 @@ prop.table(table(df_b$Does.your.business..as.a.means.of.payment..accept.Bitcoin.
 # 4 Jobs
 
 ## 4.1 Workers recieving employment-based traning, as a percentage of total employment
+61%
 
 ```{r, eval=FALSE}
-prop.table(table(df_b$))
+df_b$What.share.of.employees.are.considered..high.skilled..<-as.numeric(df_b$What.share.of.employees.are.considered..high.skilled..)
+df_b$What.share.of.employees.are.considered..low.skilled..<-as.numeric(df_b$What.share.of.employees.are.considered..low.skilled..)
+df_b$What.share.of.employees.are.considered..medium.skilled..<-as.numeric(df_b$What.share.of.employees.are.considered..medium.skilled..)
+
+
+
+df_b$employee.validity<-(
+       df_b$What.share.of.employees.are.considered..high.skilled..+
+        df_b$What.share.of.employees.are.considered..low.skilled..+
+        df_b$What.share.of.employees.are.considered..medium.skilled..  
+)%>%as.numeric()
+
+df_b$employee.validity.check <-
+  ifelse(df_b$employee.validity==100,"Valid","Invalid")
+
+
+df_b$What.percentage.of.high.skilled.workers.receive.employment.based.training.<-as.numeric(df_b$What.percentage.of.high.skilled.workers.receive.employment.based.training.)
+df_b$What.percentage.of.low.skilled.workers.receive.employment.based.training.<-as.numeric(df_b$What.percentage.of.low.skilled.workers.receive.employment.based.training.)
+df_b$What.percentage.of.medium.skilled.workers.receive.employment.based.training.<-as.numeric(df_b$What.percentage.of.medium.skilled.workers.receive.employment.based.training.)
+
+df_ba<-filter(df_b,employee.validity.check=="Valid")
+
+df_ba$percent.employment.training<- (df_ba$What.share.of.employees.are.considered..high.skilled..*
+        df_ba$What.percentage.of.high.skilled.workers.receive.employment.based.training. +
+        df_ba$What.share.of.employees.are.considered..low.skilled..* df_ba$What.percentage.of.low.skilled.workers.receive.employment.based.training.+
+        df_ba$What.share.of.employees.are.considered..medium.skilled.. *
+        df_ba$What.percentage.of.medium.skilled.workers.receive.employment.based.training.)/100
+  
+mean(df_ba$percent.employment.training)  
+
+
+
 ```
 
 
