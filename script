@@ -6,8 +6,7 @@ editor: visual
 
 # Data analysis Futura surveys
 
-## Futura colors we will be using:
-
+Futura colors we will be using:
 Pink: "#fc8b9b" Peach: "#F6BC65" Aruba blue: "#81d7d3"
 
 ```{r, message=FALSE, warning=FALSE, eval=FALSE}
@@ -67,6 +66,12 @@ d_4.1<-as_tibble(d_4.1)
 
 d_5.1<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/5.1.csv", stringsAsFactors = FALSE)
 d_5.1<-as_tibble(d_5.1)
+
+d_5.2<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/5.2.csv", stringsAsFactors = FALSE)
+d_5.2<-as_tibble(d_5.2)
+
+d_5.3<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/5.3.csv", stringsAsFactors = FALSE)
+d_5.3<-as_tibble(d_5.3)
 
 d_6.1<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/6.1.csv", stringsAsFactors = FALSE)
 d_6.1<-as_tibble(d_6.1)
@@ -950,8 +955,6 @@ geom_segment(aes(x = Country, y = 76.8, xend = Country, yend = Observations), co
   geom_hline(yintercept = 76.8, color = "black", size=0.5)
 ```
 
-# Society
-
 ## 5.2 Women as a share of all 16--24-year-olds who can program
 
 defined age group: 12-25
@@ -963,20 +966,73 @@ YES - female - 16 YES - male - 15
 Total female: 50 Total male: 40
 
 Yes female: 16/50= 32% Yes male: 15/40= 38% difference is 6%?
+16/90=
 
 ```{r, eval=FALSE}
 table(df$Age,df$Gender,df$Proficiency_coding)
 ```
 
-## 5.4
+```{r}
+ggplot(d_5.2, aes(x=reorder(`Country`,Observations), y=Observations, label=Observations)) + 
+  geom_point( aes(col=Label), size=12)  +
+geom_segment(aes(x = Country, y = 27.9, xend = Country, yend = Observations), colour=d_5.2$Colour, size=1)+
+  scale_color_manual(name="Compared to average", 
+                     labels = c("Above", "Below", "Aruba"), 
+                     values = c("Positive"="#fc8b9b", "Negative"="#F6BC65", "Aruba"="#81d7d3")) + 
+  geom_text(color="black", size=3.5) +
+  ylim(5, 40) +
+  coord_flip()+
+  theme_classic()+
+  theme(axis.text.x=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.line.x = element_blank(),
+        axis.ticks = element_blank(),
+        legend.position="none",
+        axis.text.y = element_text(color="black", 
+                           size=12)
+        )+ 
+  geom_hline(yintercept = 27.9, color = "black", size=0.5)
+```
 
+## 5.3 Disparity in internet use between men and women
 Female: 201/(201+20)= 91% Male: 171/(18+171)= 90% Difference -1%
 
 ```{r, eval=FALSE}
 table(df$Gender,df$access_internet_3_months)
 ```
 
-## 5.5 Percentage of individuals who use digital equipment at work that telework from home once a week or more
+```{r}
+ggplot(d_5.3, aes(x=reorder(`Country`,Observations), y=Observations, label=Observations)) + 
+  geom_point( aes(col=Label), size=12)  +
+geom_segment(aes(x = Country, y = 0.7, xend = Country, yend = Observations), colour=d_5.3$Colour, size=1)+
+  scale_color_manual(name="Compared to average", 
+                     labels = c("Above", "Below", "Aruba"), 
+                     values = c("Positive"="#fc8b9b", "Negative"="#F6BC65", "Aruba"="#81d7d3")) + 
+  geom_text(color="black", size=3.5) +
+  ylim(-5, 15) +
+  coord_flip()+
+  theme_classic()+
+  theme(axis.text.x=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.line.x = element_blank(),
+        axis.ticks = element_blank(),
+        legend.position="none",
+        axis.text.y = element_text(color="black", 
+                           size=12)
+        )+ 
+  geom_hline(yintercept = 0.7, color = "black", size=0.5)
+```
+
+
+
+
+
+
+
+## 5.4 Percentage of individuals who use digital equipment at work that telework from home once a week or more
+Percentage of individuals who use digital equipment at work that telework from home once a week or more
 
 Daily 33 No job 81 Monthly 1 Never 155 Once a week 13 Rarely 76 Several times a week 26
 
@@ -987,6 +1043,8 @@ once a week or more: 33+13+26=72 72/280=26%
 ```{r, eval=FALSE}
 table(df_y$Frequency_work_from_home_digital_devices)
 ```
+
+
 
 # Trust
 
@@ -1208,4 +1266,5 @@ geom_segment(aes(x = Country, y = 44, xend = Country, yend = Observations), colo
   geom_hline(yintercept = 44, color = "black", size=0.5)
 ```
 
-`{r, eval=FALSE } write.csv(BUS_Select,"BUS_Select.csv", row.names = FALSE)`
+```{r, eval=FALSE } write.csv(BUS_Select,"BUS_Select.csv", row.names = FALSE)
+```
