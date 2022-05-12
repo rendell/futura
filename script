@@ -19,7 +19,7 @@ library(readr)
 library(ggplot2)
 library(Rmisc)
 library(OpenStreetMap)
-library(sf)
+ library(sf)
 library(treemap)
 library(waffle)
 library(ggplot2)
@@ -776,12 +776,21 @@ geom_segment(aes(x = Country, y = 25.5, xend = Country, yend = Observations), co
 ```
 
 ## 3.2
-Bitcoin
+Alternative paytment means, includeing Bitcoin
+Bitcoin     = 3%
+Paypal      = 6.7%
+Pay.aw      = 6.7%
+CXPay       = 4.5%
+
 ```{r}
 prop.table(table(df_b$Does.your.business..as.a.means.of.payment..accept.Bitcoin.or.other.cryptocurrency.))
+
+prop.table(table(df_b$Does.your.business.offer.any.of.the.following.payment.options....Paypal))
+
+prop.table(table(df_b$Does.your.business.offer.any.of.the.following.payment.options....Pay.aw))
+
+prop.table(table(df_b$Does.your.business.offer.any.of.the.following.payment.options....CXpay))
 ```
-
-
 
 # 4 Jobs
 
@@ -942,7 +951,7 @@ geom_segment(aes(x = Country, y = 76.8, xend = Country, yend = Observations), co
 
 # Society
 
-## 5.3 Women as a share of all 16–24-year-olds who can program
+## 5.2 Women as a share of all 16–24-year-olds who can program
 
 defined age group: 12-25
 
@@ -957,6 +966,7 @@ Total male: 40
 
 Yes female: 16/50= 32%
 Yes male: 15/40=  38%
+difference is 6%?
 
 ```{r, eval=FALSE}
 table(df$Age,df$Gender,df$Proficiency_coding)
