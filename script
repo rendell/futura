@@ -1,17 +1,14 @@
 ---
-title: "Futura survey notebook"
-output:
-  html_document:
-    df_print: paged
+title: "Futura"
+format: html
+editor: visual
 ---
+
 # Data analysis Futura surveys
 
-## Futura colours we will be using:
-Pink: "#fc8b9b" 
-Peach: "#F6BC65"
-aruba blue: "#81d7d3"
+## Futura colors we will be using:
 
-
+Pink: "#fc8b9b" Peach: "#F6BC65" Aruba blue: "#81d7d3"
 
 ```{r, message=FALSE, warning=FALSE, eval=FALSE}
 library(tidyverse)
@@ -102,8 +99,6 @@ coord_sf() + theme(panel.background = element_blank(),
   labs(caption = "Source: Cornerstone Economics 2022")
 ```
 
-
-
 ```{r,eval=FALSE}
 df          <- left_join(df,GAC,
                                     by=c("Street"="Straatnaam"))
@@ -112,6 +107,7 @@ df$y <- df$POINT_Y
 ```
 
 #Actual mapping
+
 ```{r, eval=FALSE}
 # extract map
 library(ggmap)
@@ -353,7 +349,8 @@ ggmap(aruba11) + # the base map
 
 ```
 
-## Coalesce
+### Coalesce
+
 ```{r, message=FALSE, eval=FALSE}
 p1<- ggplot(df, aes(Age, fill=Gender))+
   geom_bar(stat="count")+
@@ -370,6 +367,7 @@ p2<-ggplot(data=df_age, aes(x=Age, y=Percentage)) +
 ```
 
 # gender
+
 ```{r, eval=FALSE}
 p1<- df%>%
   filter(Gender !="Prefer not to disclose")%>%
@@ -397,9 +395,7 @@ prop.table(table(df$Internet_home_cable))
 prop.table(table(df$Age, df$Time))
 ```
 
-8. 
-No=126, yes=197
-61% have made purchases online in the last 12 months
+8.  No=126, yes=197 61% have made purchases online in the last 12 months
 
 ```{r, eval=FALSE}
 table(df_y$Internet_purchase,df_y$Internet_some)
@@ -408,12 +404,11 @@ table(df_y$Internet_purchase,df_y$Internet_some)
 # Access
 
 ## 1.2 Share of households with broadband connection
+
 interpretation:
 
+308+2+3+3+2+7=325 total: 45+2+308+3+3+2+15+7=385 325/385=84%
 
-308+2+3+3+2+7=325
-total: 45+2+308+3+3+2+15+7=385
-325/385=84%
 ```{r, eval=FALSE}
 table(df_y$Internet_home_cable)
 ```
@@ -442,22 +437,18 @@ geom_segment(aes(x = Country, y = 86.6, xend = Country, yend = Observations), co
 ```
 
 Does your business have a broadband connection?
+
 ```{r}
 prop.table(table(df_b$Does.your.business.have.its.own.broadband.internet.connection.))
 ```
 
-
-
 ## 1.3 Disparity in broadband uptake between urban and rural households
 
-San Nicolas
-20/(26+7+20)*100=37.7% has no access to broadband at home
+San Nicolas 20/(26+7+20)\*100=37.7% has no access to broadband at home
 
-Noord / Tanki Leendert
-28/(58+28)*100 = 32.6% has no access to broadband at home
+Noord / Tanki Leendert 28/(58+28)\*100 = 32.6% has no access to broadband at home
 
-Divide:
-37.7%-32.6% = 5.1%
+Divide: 37.7%-32.6% = 5.1%
 
 ```{r, eval=FALSE}
 table(df$Regio, df$Internet_home_cable)
@@ -487,20 +478,18 @@ geom_segment(aes(x = Country, y = 8.1, xend = Country, yend = Observations), col
   geom_hline(yintercept = 8.1, color = "black", size=0.5)
 ```
 
-
-
 ## 1.4 Share of businesses with broadband contracted speed of 30 Mbps or more
-no - 42
-yes - 92
-share=92/(42+92)=69%
+
+no - 42 yes - 92 share=92/(42+92)=69%
+
 ```{r, eval=FALSE}
 table(df_b$Does.your.business.have.its.own.broadband.internet.connection.)
 ```
 
 ## 2.1 Internet users as a share of individuals
 
-54/411=13%
-1-13% = 87%
+54/411=13% 1-13% = 87%
+
 ```{r, eval=FALSE}
 table(df$Often_email)
 ```
@@ -528,10 +517,10 @@ geom_segment(aes(x = Country, y = 85.6, xend = Country, yend = Observations), co
   geom_hline(yintercept = 85.6, color = "black", size=0.5)
 ```
 
-
 ## 2.2 Share of individuals using the internet to interact with public authorities
 
 Uptake of digital government services
+
 ```{r, eval=FALSE}
 table(df$Internet_Censo)
 table(df$Internet_Setar)
@@ -582,9 +571,9 @@ geom_segment(aes(x = Country, y = 60.2, xend = Country, yend = Observations), co
 ```
 
 ## 2.3 Share of internet users who have purchase online in the last 12 months
-no -176
-yes - 209
-209/(176+209)= 54%
+
+no -176 yes - 209 209/(176+209)= 54%
+
 ```{r, eval=FALSE}
 table(df_y$Internet_purchase)
 ```
@@ -613,11 +602,10 @@ geom_segment(aes(x = Country, y = 69.9, xend = Country, yend = Observations), co
 ```
 
 ## 2.4 Share of small businesses making e-commerce sales in the last 12 months
+
 Micro and small grouped together:
 
-No 88+14=102
-Yes 17+6=23
-=23/102*100=23%
+No 88+14=102 Yes 17+6=23 =23/102\*100=23%
 
 ```{r, eval=FALSE}
 table(BUS_Select$Has.your.businesses.made.e.commerce.sales.that.sell.across.borders..the.last.year.,BUS_Select$type)
@@ -647,18 +635,11 @@ geom_segment(aes(x = Country, y = 22.1, xend = Country, yend = Observations), co
 ```
 
 ## 2.5 Share of businesses with a web presence
-YES - 121
-No - 13
-121/(13+121)=
 
+YES - 121 No - 13 121/(13+121)=
 
-Business website: 57, 77
-FB page: 30,104
-Linkedin: 83,51
-Twitter: 117, 17
-Instagram: 60, 74
-TikTok: 3
-Pinterest: 1
+Business website: 57, 77 FB page: 30,104 Linkedin: 83,51 Twitter: 117, 17 Instagram: 60, 74 TikTok: 3 Pinterest: 1
+
 ```{r, eval=FALSE}
 table(df_b$Does.your.business.offer.the.following.web.presence....Business.website)
 table(df_b$Does.your.business.offer.the.following.web.presence....Facebook.page)
@@ -724,9 +705,11 @@ geom_segment(aes(x = Country, y = 74.1, xend = Country, yend = Observations), co
 ```
 
 ## 2.6 Share of businesses purchasing cloud services
+
 ```{r, eval=FALSE}
 prop.table(table(df_b$Does.your.business.use.cloud.services.))
 ```
+
 ```{r, eval=FALSE}
 
 ```
@@ -735,9 +718,10 @@ prop.table(table(df_b$Does.your.business.use.cloud.services.))
 
 ## 3.1 Share of start-up firms (up to 2 years old) in the business population
 
-new firms < 3 years.
+new firms \< 3 years.
 
-25/(25+109)*100 = 19%
+25/(25+109)\*100 = 19%
+
 ```{r, eval=FALSE}
 df_b$new_firms <- ifelse(df_b$For.how.many.years.has.your.business.been.active.conducting.commercial.activity. < 3,"start-up","established")
 table(df_b$new_firms)
@@ -775,12 +759,13 @@ geom_segment(aes(x = Country, y = 25.5, xend = Country, yend = Observations), co
   geom_hline(yintercept = 25.5, color = "black", size=0.5)
 ```
 
-## 3.2
-Alternative paytment means, includeing Bitcoin
-Bitcoin     = 3%
-Paypal      = 6.7%
-Pay.aw      = 6.7%
-CXPay       = 4.5%
+## 3.2 Businesses accepting crypto currencies as a means of payment
+
+Alternative paytment means, includeing Bitcoin 
+Bitcoin = 3% 
+Paypal = 6.7% 
+Pay.aw = 6.7% 
+CXPay = 4.5%
 
 ```{r}
 prop.table(table(df_b$Does.your.business..as.a.means.of.payment..accept.Bitcoin.or.other.cryptocurrency.))
@@ -792,19 +777,41 @@ prop.table(table(df_b$Does.your.business.offer.any.of.the.following.payment.opti
 prop.table(table(df_b$Does.your.business.offer.any.of.the.following.payment.options....CXpay))
 ```
 
+```{r}
+# Create the data
+Methode <- c("Bitcoin","Paypal","Pay.aw","CXPay")
+Share <- c(3,6.7,6.7,4.5)
+
+d_3.2 <- data.frame(Methode, Share)
+```
+
+
+```{r, eval=FALSE}
+# Barplot
+ggplot(d_3.2, aes(x=reorder(`Methode`, Share), y=Share)) + 
+  geom_bar(stat = "identity", fill="#fc8b9b") +
+  coord_flip()+
+  geom_text(aes(label = Share), hjust = 1, size=10)+
+  theme_classic()+
+  theme(axis.text.x=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.line.x = element_blank(),
+        axis.line.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.text.y = element_text(color="black", 
+                           size=24),
+        legend.position="none")
+```
+
+
 # 4 Jobs
 
 ## 4.1 Workers recieving employment-based traning, as a percentage of total employment
-total mean = 61%
-Share
-low skilled workers    = 10%
-Medium skilled workers = 20%
-high skilled workers   = 70%
-low skilled workers    = 61%
-Medium skilled workers = 76%
-High skilled workers   = 83%
 
-(0.1*61)+(0.2*76)+(0.7*83) = 79%
+total mean = 61% Share low skilled workers = 10% Medium skilled workers = 20% high skilled workers = 70% low skilled workers = 61% Medium skilled workers = 76% High skilled workers = 83%
+
+(0.1*61)+(0.2*76)+(0.7\*83) = 79%
 
 ```{r, eval=FALSE}
 df_b$What.share.of.employees.are.considered..high.skilled..<-as.numeric(df_b$What.share.of.employees.are.considered..high.skilled..)
@@ -900,28 +907,23 @@ geom_segment(aes(x = Country, y = 58, xend = Country, yend = Observations), colo
   geom_hline(yintercept = 58, color = "black", size=0.5)
 ```
 
-
 # 4.2: ICT task-intensive jobs as a percentage of total employment
+
 ```{r}
 write.csv(BUS_Select, "BUS_Select.csv")
 ```
 
-
-
 # 5. Society
 
 ## 5.1 Percentage of individuals aged 55-74 using the Internet
+
 ```{r}
 table(df$Age, df$access_internet_3_months)
 ```
 
+no - 21 yes - 364
 
-
-no - 21
-yes - 364
-
-no=21/(21+364)*100=5.5%
-Yes = 1-5.5% = 94.5%
+no=21/(21+364)\*100=5.5% Yes = 1-5.5% = 94.5%
 
 ```{r, eval=FALSE}
 table(df_y$access_internet_3_months)
@@ -948,25 +950,19 @@ geom_segment(aes(x = Country, y = 76.8, xend = Country, yend = Observations), co
   geom_hline(yintercept = 76.8, color = "black", size=0.5)
 ```
 
-
 # Society
 
-## 5.2 Women as a share of all 16–24-year-olds who can program
+## 5.2 Women as a share of all 16--24-year-olds who can program
 
 defined age group: 12-25
 
-NO -female - 34
-No -male - 25
+NO -female - 34 No -male - 25
 
-YES - female - 16
-YES - male - 15
+YES - female - 16 YES - male - 15
 
-Total female: 50
-Total male: 40
+Total female: 50 Total male: 40
 
-Yes female: 16/50= 32%
-Yes male: 15/40=  38%
-difference is 6%?
+Yes female: 16/50= 32% Yes male: 15/40= 38% difference is 6%?
 
 ```{r, eval=FALSE}
 table(df$Age,df$Gender,df$Proficiency_coding)
@@ -974,9 +970,7 @@ table(df$Age,df$Gender,df$Proficiency_coding)
 
 ## 5.4
 
-Female: 201/(201+20)= 91%
-Male: 171/(18+171)= 90%
-Difference -1%
+Female: 201/(201+20)= 91% Male: 171/(18+171)= 90% Difference -1%
 
 ```{r, eval=FALSE}
 table(df$Gender,df$access_internet_3_months)
@@ -984,19 +978,11 @@ table(df$Gender,df$access_internet_3_months)
 
 ## 5.5 Percentage of individuals who use digital equipment at work that telework from home once a week or more
 
-Daily 33
-No job 81
-Monthly 1
-Never 155
-Once a week 13
-Rarely 76
-Several times a week 26
-
+Daily 33 No job 81 Monthly 1 Never 155 Once a week 13 Rarely 76 Several times a week 26
 
 total: 33+1+155+13+76+26=280
 
-once a week or more: 33+13+26=72
-72/280=26%
+once a week or more: 33+13+26=72 72/280=26%
 
 ```{r, eval=FALSE}
 table(df_y$Frequency_work_from_home_digital_devices)
@@ -1005,20 +991,10 @@ table(df_y$Frequency_work_from_home_digital_devices)
 # Trust
 
 ## 6.1
-Percentage of Internet users experiencing abuse of personal information or privacy violations
-No - 326
-Yes - 28
-Not an internet user - 31
-tot - 354
-28/354 = 7.9%
 
+Percentage of Internet users experiencing abuse of personal information or privacy violations No - 326 Yes - 28 Not an internet user - 31 tot - 354 28/354 = 7.9%
 
-No - 331
-Yes - 29
-Not an internet user - 51
-tot - 360
-29/360=8.1%
-
+No - 331 Yes - 29 Not an internet user - 51 tot - 360 29/360=8.1%
 
 ```{r, eval=FALSE}
 table(df_y$Experience_privacy_violations) # this is where old people are already filtered out
@@ -1046,9 +1022,10 @@ geom_segment(aes(x = Country, y = 3.4, xend = Country, yend = Observations), col
   geom_hline(yintercept = 3.35, color = "black", size=0.5)
 ```
 
-
 ## 6.2
+
 Percentage of individuals not buying online due to payment security concerns
+
 ```{r, eval=FALSE}
 table(df$Internet_purchase_reason)
 
@@ -1074,18 +1051,18 @@ geom_segment(aes(x = Country, y = 27.2, xend = Country, yend = Observations), co
   geom_hline(yintercept = 27.2, color = "black", size=0.5)
 ```
 
-## 6.3 
+## 6.3
+
 Percentage of individuals not buying online due to concerns about returning products
 
-Inconsistencies with very high observations in the OECD made me drop this from the analaysis. 
+Inconsistencies with very high observations in the OECD made me drop this from the analaysis.
 
 ## 6.4
+
 Percentage of businesses in which ICT security and data protection tasks are mainly performed by own employees
 
-No - 60
-Yes - 74
-No = 60/(60+74)= 45.0%
-Yes 1-45% = 55%
+No - 60 Yes - 74 No = 60/(60+74)= 45.0% Yes 1-45% = 55%
+
 ```{r, eval=FALSE}
 table(df_b$Are.the.ICT.security.and.data.protection.tasks.of.your.business.mainly.performed.by.own.employees.)
 
@@ -1111,10 +1088,10 @@ geom_segment(aes(x = Country, y = 23.7, xend = Country, yend = Observations), co
   geom_hline(yintercept = 23.7, color = "black", size=0.5)
 ```
 
-
 # Business survey manipulations
 
 ## Data cleaning
+
 ```{r, eval=FALSE}
 df_b<- df_b%>%
   filter(CompletionStatus !="Partially Completed")
@@ -1129,10 +1106,7 @@ BUS_Select <- df_b%>%
          )
 ```
 
-Micro | 1-10
-Small | 11-50
-Medium |51-250
-Large |  >250
+Micro \| 1-10 Small \| 11-50 Medium \|51-250 Large \| \>250
 
 ```{r, eval=FALSE}
 # library
@@ -1156,8 +1130,6 @@ treemap(tm_data,
             )
 ```
 
-
-
 ```{r, eval=FALSE}
 BUS_Select$type <- 
   ifelse((BUS_Select$How.many.employees.does.your.business.employ.at.the.moment.>=0)&
@@ -1173,8 +1145,8 @@ ifelse(BUS_Select$How.many.employees.does.your.business.employ.at.the.moment. > 
 table(BUS_Select$type)
 
 ```
-12
 
+12
 
 ```{r, eval=FALSE}
 df_b%>%
@@ -1182,8 +1154,8 @@ df_b%>%
   mean(What.percentage.of.low.skilled.workers.receive.employment.based.training.)
 ```
 
-
 Waffle chart
+
 ```{r, eval=FALSE}
 Blue.text <- element_text(color = "#00006f")
 ```
@@ -1206,11 +1178,13 @@ plot_new_old <- ggplot(data = new_old,
 ```
 
 Does your business digitally deliver services?
+
 ```{r, eval=FALSE}
 table(df_b$Does.your.business.digitally.deliver.services.across.borders.)
 ```
 
 ## 7.1
+
 ```{r, eval=FALSE}
 ggplot(d_7.1, aes(x=reorder(`Country`,Observations), y=Observations, label=Observations)) + 
   geom_point( aes(col=Label), size=12)  +
@@ -1234,7 +1208,4 @@ geom_segment(aes(x = Country, y = 44, xend = Country, yend = Observations), colo
   geom_hline(yintercept = 44, color = "black", size=0.5)
 ```
 
-```{r, eval=FALSE
-}
-write.csv(BUS_Select,"BUS_Select.csv", row.names = FALSE)
-```
+`{r, eval=FALSE } write.csv(BUS_Select,"BUS_Select.csv", row.names = FALSE)`
