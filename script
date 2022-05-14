@@ -44,7 +44,7 @@ d_1.2<-as_tibble(d_1.2)
 d_2.1<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/2.1.csv", stringsAsFactors = FALSE)
 d_2.1<-as_tibble(d_2.1)
 
-d_2.2<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/2.2.csv", stringsAsFactors = FALSE)
+d_2.2<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/2.2.2.csv", stringsAsFactors = FALSE)
 d_2.2<-as_tibble(d_2.2)
 
 d_2.3<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/2.3.csv", stringsAsFactors = FALSE)
@@ -83,11 +83,15 @@ d_6.1<-as_tibble(d_6.1)
 d_6.2<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/6.2.csv", stringsAsFactors = FALSE)
 d_6.2<-as_tibble(d_6.2)
 
-d_6.4<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/6.4.csv", stringsAsFactors = FALSE)
+d_6.4<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/6.3.csv", stringsAsFactors = FALSE)
 d_6.4<-as_tibble(d_6.4)
 
 d_7.1<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/7.1.csv", stringsAsFactors = FALSE)
 d_7.1<-as_tibble(d_7.1)
+
+spider<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/spider.csv", stringsAsFactors = FALSE)
+spider<-as_tibble(spider)
+
 ```
 
 # Business survey manipulations
@@ -126,8 +130,12 @@ table(BUS_Select$type)
 
 ```
 
+# Shapefile
 ```{r, eval=FALSE, include=FALSE}
-#requires uploading from the computer untill now have not been able to link to github
+temp_shapefile <- tempfile()
+download.file("https://github.com/rendell/futura/raw/main/GAC_Regios_WGS1984.zip", temp_shapefile)
+unzip(temp_shapefile)
+
 shape<- st_read("GAC_Regios_WGS1984.shp")
 #To add the regions by colour
 shape$region<- c("#fc8b9b","#ffffff","#ffffff","#ffffff","#ffffff","#F6BC65","#F6BC65","#ffffff")
@@ -139,8 +147,7 @@ coord_sf() + theme(panel.background = element_blank(),
         axis.ticks.x=element_blank(), #remove x axis ticks
         axis.text.y=element_blank(),  #remove y axis labels
         axis.ticks.y=element_blank()  #remove y axis ticks
-                   )+ ggtitle("Figure X: Broadband divide")+ 
-  labs(caption = "Source: Cornerstone Economics 2022")
+                   )
 ```
 
 ```{r,eval=FALSE}
@@ -1282,6 +1289,79 @@ geom_segment(aes(x = Country, y = 44, xend = Country, yend = Observations), colo
 summary(d_1.1$Observations)
 ```
 
+# Normalization
+```{r}
+min(d_1.1$Observations)
+max(d_1.1$Observations)
+
+min(d_1.2$Observations)
+max(d_1.2$Observations)
+
+min(d_1.3$Observations)
+max(d_1.3$Observations)
+
+min(d_2.1$Observations)
+max(d_2.1$Observations)
+
+min(d_2.2$Observations)
+max(d_2.2$Observations)
+
+min(d_2.3$Observations)
+max(d_2.3$Observations)
+
+min(d_2.4$Observations)
+max(d_2.4$Observations)
+
+min(d_2.5$Observations)
+max(d_2.5$Observations)
+
+min(d_3.1$Observations)
+max(d_3.1$Observations)
+
+min(d_4.1$Observations)
+max(d_4.1$Observations)
+
+min(d_5.1$Observations)
+max(d_5.1$Observations)
+
+min(d_5.2$Observations)
+max(d_5.2$Observations)
+
+min(d_5.3$Observations)
+max(d_5.3$Observations)
+
+min(d_5.4$Observations)
+max(d_5.4$Observations)
+
+min(d_6.1$Observations)
+max(d_6.1$Observations)
+
+min(d_6.2$Observations)
+max(d_6.2$Observations)
+
+min(d_6.4$Observations)
+max(d_6.4$Observations)
+
+min(d_7.1$Observations)
+max(d_7.1$Observations)
+```
+
+
+# Spider
+```{r}
+ggplot(spider) +
+  geom_segment( aes(x=Aruba, xend=Aruba, y=Aruba, yend=OECD.average), color="grey") +
+  geom_point( aes(x=Aruba, y=Aruba), color=rgb(0.2,0.7,0.1,0.8), size=3 ) +
+  geom_point( aes(x=Aruba, y=OECD.average), color=rgb(0.7,0.2,0.1,0.8), size=3 ) +
+  coord_flip()+
+  theme_ipsum() +
+  theme(
+    legend.position = "none",
+    panel.border = element_blank(),
+  ) +
+  xlab("") +
+  ylab("Value of Y")
+```
 
 
 ```{r, eval=FALSE } write.csv(BUS_Select,"BUS_Select.csv", row.names = FALSE)
