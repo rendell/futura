@@ -1,0 +1,150 @@
+# packages ----------------------------------------------------------------
+
+library(dplyr)
+library(ggplot2)
+library(readr)
+library(janitor)
+
+
+# data --------------------------------------------------------------------
+
+data <- read_csv("https://raw.githubusercontent.com/rendell/futura/main/spider.csv")
+
+
+data2 <- data %>%
+  clean_names() %>%
+  mutate(aruba = aruba * 100,
+         oecd_average = oecd_average * 100,
+         diff = aruba - oecd_average,
+         diff = ifelse(diff < 0, "Greater than Aruba", "Smaller than Aruba"))
+# plot --------------------------------------------------------------------
+
+data2 %>%
+  ggplot() +
+  # Make custom panel grid
+  geom_hline(
+    aes(yintercept = y),
+    data.frame(y = c(0,25,50,75,100)),
+    color = "lightgrey"
+  ) +
+  # Add bars
+  geom_col(
+    aes(
+      x = reorder(policy_dimension , oecd_average),
+      y = oecd_average,
+      fill = diff
+    ),
+    position = "dodge2",
+    show.legend = TRUE,
+    alpha = .9
+  ) +
+  # Lollipop shaft for mean gain per region
+  geom_segment(
+    aes(
+      x = reorder(policy_dimension , aruba),
+      y = 0,
+      xend = reorder(policy_dimension , aruba),
+      yend = 100
+    ),
+    linetype = "dashed",
+    color = "black"
+  ) +
+  # Add dots to represent the mean gain
+  geom_point(
+    aes(
+      x = reorder(policy_dimension , oecd_average),
+      y = aruba
+    ),
+    size = 3,
+    shape = 21,
+    color = "black",
+    fill = "#81d7d3"
+  )+
+
+  # Annotate custom scale inside plot
+  annotate(
+    x = 7.5,
+    y = 25,
+    label = "25",
+    geom = "text",
+    color = "gray12",
+    family = "Bell MT"
+  ) +
+  annotate(
+    x = 7.5,
+    y = 50,
+    label = "50",
+    geom = "text",
+    color = "gray12",
+    family = "Bell MT"
+  ) +
+  annotate(
+    x = 7.5,
+    y = 75,
+    label = "75",
+    geom = "text",
+    color = "gray12",
+    family = "Bell MT"
+  ) +
+  annotate(
+    x = 7.5,
+    y = 100,
+    label = "100",
+    geom = "text",
+    color = "gray12",
+    family = "Bell MT"
+  )+
+  annotate(
+    x = 7.15,
+    y = 33,
+    angle = -67,
+    label = "Aruba",
+    geom = "text",
+    family = "Bell MT"
+  )+
+  # Scale y axis so bars don't start in the center
+  scale_y_continuous(
+    limits = c(-30,100),
+    expand = c(0,0),
+    breaks = seq(0,100,25)
+  ) +
+  # New fill and legend title for number of tracks per region
+  scale_fill_manual(
+   values = c("Smaller than Aruba" = "#fc8b9b",
+              "Greater than Aruba" = "#F6BC65")
+  )+
+  labs(
+   title = "",
+   subtitle = "",
+   caption = ""
+  )+
+  # Make it circular!
+  coord_polar(clip = "off")+
+  # Customize general theme
+  theme(
+    # Remove axis ticks and text
+    axis.title = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.y = element_blank(),
+    # Use gray text for the region names
+    axis.text.x = element_text(color = "gray12", size = 12),
+    # Move the legend to the bottom
+    legend.position = "bottom",
+    legend.title = element_blank(),
+    # Set default color and font family for the text
+    text = element_text(color = "gray12", family = "Bell MT"),
+
+    # Customize the text in the title, subtitle, and caption
+    plot.title = element_text(face = "bold", size = 25),
+    plot.title.position = "plot",
+    plot.subtitle = element_text(size = 14),
+    plot.caption = element_text(size = 10),
+
+    # Make the background white and remove extra grid lines
+    panel.background = element_rect(fill = "white", color = NA),
+    panel.grid = element_blank(),
+    panel.grid.major.x = element_blank(),
+    plot.margin = margin(10,10,10,10, "pt")
+  )
+
+ggsave("plot.png", width = 6, height = 6)
