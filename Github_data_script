@@ -1,0 +1,82 @@
+---
+title: "Github data"
+format: html
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+library(gh)
+library(countrycode)
+```
+
+
+# countries 
+```{r}
+countries <- c(
+  "Aruba",
+  "Sint Maarten",
+  "Curacao",
+  "Antigua and Barbuda",
+  "Haiti",
+  "Bahamas",
+  "Jamaica",
+  "Barbados",
+  "Saint Kitts and Nevis",
+  "Belize",
+  "Saint Lucia",
+  "Dominica",
+  "Saint Vincent and the Grenadines",
+  "Grenada",
+  "Suriname",
+  "Guyana",
+  "Trinidad and Tobago"
+)
+```
+
+```{r}
+# this come from wikipedia
+countries_nl <- tribble(
+  ~countries, ~population,
+  "St Eustatius",   	3138,
+  "Saba",  1933,
+  "Bonaire",   20104
+)
+```
+
+```{r}
+country_codes  <- as.data.frame(countrycode::countrycode(countries, origin = "country.name", destination = "iso3c")) 
+
+names(country_codes) <- "country"
+
+country_codes_join <- country_codes |> 
+  left_join(world_bank_pop) |> 
+  filter(indicator == "SP.POP.TOTL") |> 
+  bind_cols(countries = countries) |> 
+  select(countries, population = "2017") 
+  
+
+all_island_countries <- bind_rows(country_codes_join, countries_nl)
+
+```
+```{r}
+# sample test
+# country <- "Aruba"
+# data_json <- gh(paste("GET /search/users?q=location:", country))
+
+
+gh_count <- lapply(all_island_countries$countries, function(x) {
+  gh(paste("GET /search/users?q=location:", x))}
+  )
+
+total_count <- sapply(gh_count, function(x) x[[1]][[1]])
+
+all_island_countries_with_gh_data <- bind_cols(all_island_countries, github_users = total_count) |> 
+  mutate(million_proportion = round((github_users * 1000000) / population))
+```
+
+
+
+
+
+write_csv(all_island_countries_with_gh_data, "gh_data.csv")
