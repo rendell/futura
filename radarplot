@@ -1,5 +1,3 @@
-# packages ----------------------------------------------------------------
-
 library(dplyr)
 library(ggplot2)
 library(readr)
@@ -60,7 +58,7 @@ data2 %>%
     color = "black",
     fill = "#81d7d3"
   )+
-
+  
   # Annotate custom scale inside plot
   annotate(
     x = 7.5,
@@ -110,13 +108,13 @@ data2 %>%
   ) +
   # New fill and legend title for number of tracks per region
   scale_fill_manual(
-   values = c("Smaller than Aruba" = "#fc8b9b",
-              "Greater than Aruba" = "#F6BC65")
+    values = c("Smaller than Aruba" = "#fc8b9b",
+               "Greater than Aruba" = "#F6BC65")
   )+
   labs(
-   title = "",
-   subtitle = "",
-   caption = ""
+    title = "",
+    subtitle = "",
+    caption = ""
   )+
   # Make it circular!
   coord_polar(clip = "off")+
@@ -133,18 +131,20 @@ data2 %>%
     legend.title = element_blank(),
     # Set default color and font family for the text
     text = element_text(color = "gray12", family = "Bell MT"),
-
+    
     # Customize the text in the title, subtitle, and caption
     plot.title = element_text(face = "bold", size = 25),
     plot.title.position = "plot",
     plot.subtitle = element_text(size = 14),
     plot.caption = element_text(size = 10),
-
+    
     # Make the background white and remove extra grid lines
-    panel.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "#f9faf9", color = "#f9faf9"),
     panel.grid = element_blank(),
     panel.grid.major.x = element_blank(),
+    plot.background = element_rect(fill = "#f9faf9"),
+    legend.background = element_rect(fill= "#f9faf9"),
     plot.margin = margin(10,10,10,10, "pt")
   )
 
-ggsave("plot.png", width = 6, height = 6)
+ggsave("A.1.png", width = 6, height = 6)
