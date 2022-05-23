@@ -18,7 +18,6 @@ library(sf)
 library(treemap)
 library(waffle)
 library(ggplot2)
-l
 ```
 
 ## Data uploading
@@ -386,7 +385,7 @@ ggmap(aruba10) + # the base map
   axis.title.y = element_blank()
   )
 
-ggmap(aruba11) + # the base map
+A.4 <- ggmap(aruba11) + # the base map
   geom_jitter(position = position_jitter(width = 0.003, height = 0.003),
               data = df, aes(x = x, y = y), 
              color = "#fc8b9b",
@@ -398,12 +397,21 @@ ggmap(aruba11) + # the base map
   axis.title.y = element_blank()
   )
 
+ggsave("A.4.jpg", dpi=1000)
+ggsave("A.4.eps", dpi=1000)
+ggsave("A.4.png", dpi=1000)
 ```
 
 ```{r, message=FALSE, eval=FALSE}
 p1<- ggplot(df, aes(Age, fill=Gender))+
   geom_bar(stat="count")+
-  theme_classic()
+  theme(
+    panel.background = element_rect(fill = "#f9faf9", color = "#f9faf9"),
+    panel.grid = element_blank(),
+    panel.grid.major.x = element_blank(),
+    plot.background = element_rect(fill = "#f9faf9"),
+    legend.background = element_rect(fill= "#f9faf9")
+  )
 
 Age <- c("12-25","26-44","45-56","57-75","76-111")
 Percentage <- c(24,26,19,26,5)
@@ -412,13 +420,22 @@ df_age <- data.frame(Age, Percentage)
 
 p2<-ggplot(data=df_age, aes(x=Age, y=Percentage)) +
     geom_bar(colour="#fc8b9b", stat="identity")+
-  theme_classic()
+  theme(
+    panel.background = element_rect(fill = "#f9faf9", color = "#f9faf9"),
+    panel.grid = element_blank(),
+    panel.grid.major.x = element_blank(),
+    plot.background = element_rect(fill = "#f9faf9"),
+    legend.background = element_rect(fill= "#f9faf9")
+  )
 ```
 
-## A.4 Individual gender
+## A.5 Individual gender
 
 ```{r, eval=FALSE}
-multiplot(p1, p2, cols=2)
+A.5<- multiplot(p1, p2, cols=2)
+ggsave("A.5.jpg", dpi=1000)
+ggsave("A.5.eps", dpi=1000)
+ggsave("A.5.png", dpi=1000)
 ```
 
 ```{r, eval=FALSE}
@@ -1344,23 +1361,6 @@ max(d_6.4$Observations)
 
 min(d_7.1$Observations)
 max(d_7.1$Observations)
-```
-
-
-# Spider
-```{r}
-ggplot(spider) +
-  geom_segment( aes(x=Aruba, xend=Aruba, y=Aruba, yend=OECD.average), color="grey") +
-  geom_point( aes(x=Aruba, y=Aruba), color=rgb(0.2,0.7,0.1,0.8), size=3 ) +
-  geom_point( aes(x=Aruba, y=OECD.average), color=rgb(0.7,0.2,0.1,0.8), size=3 ) +
-  coord_flip()+
-  theme_ipsum() +
-  theme(
-    legend.position = "none",
-    panel.border = element_blank(),
-  ) +
-  xlab("") +
-  ylab("Value of Y")
 ```
 
 
