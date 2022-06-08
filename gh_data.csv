@@ -1,17 +1,17 @@
-Countries,population,github_users,million_proportion,Normalized
-Aruba,105264,322,3059,0.55
-Curacao,161014,56,348,0.06
-Haiti,10981229,456,42,0.01
-Bahamas,395361,69,175,0.03
-Jamaica,2890299,570,197,0.03
-Barbados,285719,77,269,0.05
-Saint Kitts and Nevis,55345,1,18,0.00
-Belize,374681,104,278,0.05
-Saint Lucia,178844,3,17,0.00
-Dominica,73925,408,5519,1.00
-Saint Vincent and the Grenadines,109897,1,9,0.00
-Grenada,107825,30,278,0.05
-Suriname,563402,22,39,0.01
-Guyana,777859,56,72,0.01
-Trinidad and Tobago,1369125,28,20,0.00
-Bonaire,20104,10,497,0.09
+Countries,population,github_users,million_proportion,Normalized,Label,Colour,Mean,,,
+Curacao,161014,56,348,0.06,Negative,#fc8b9b,0.09,,#fc8b9b,#F6BC65
+Haiti,10981229,456,42,0.01,Positive,#F6BC65,,,,
+Bahamas,395361,69,175,0.03,Positive,#F6BC65,,,,
+Jamaica,2890299,570,197,0.03,Positive,#F6BC65,,,,
+Barbados,285719,77,269,0.05,Positive,#F6BC65,,,,
+Saint Kitts and Nevis,55345,1,18,0.00,Positive,#F6BC65,,,,
+Belize,374681,104,278,0.05,Positive,#F6BC65,,,,
+Saint Lucia,178844,3,17,0.00,Positive,#F6BC65,,,,
+Dominica,73925,408,5519,1.00,Positive,#F6BC65,,,,
+Saint Vincent and the Grenadines,109897,1,9,0.00,Positive,#F6BC65,,,,
+Grenada,107825,30,278,0.05,Positive,#F6BC65,,,,
+Suriname,563402,22,39,0.01,Positive,#F6BC65,,,,
+Guyana,777859,56,72,0.01,Positive,#F6BC65,,,,
+Trinidad and Tobago,1369125,28,20,0.00,Positive,#F6BC65,,,,
+Bonaire,20104,10,497,0.09,Positive,#F6BC65,,,,
+Aruba,105264,322,3059,0.55,,#81d7d3,,,,
