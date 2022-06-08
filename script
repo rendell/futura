@@ -61,6 +61,10 @@ d_2.5.1<-as_tibble(d_2.5.1)
 d_3.1<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/3.1.csv", stringsAsFactors = FALSE)
 d_3.1<-as_tibble(d_3.1)
 
+d_3.3<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/gh_data.csv", stringsAsFactors = FALSE)
+d_3.3<-as_tibble(d_3.3)
+
+
 d_4.1<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/4.1.csv", stringsAsFactors = FALSE)
 d_4.1<-as_tibble(d_4.1)
 
@@ -90,7 +94,6 @@ d_7.1<-as_tibble(d_7.1)
 
 spider<- read.csv("https://raw.githubusercontent.com/rendell/futura/main/spider.csv", stringsAsFactors = FALSE)
 spider<-as_tibble(spider)
-
 ```
 
 # Business survey manipulations
@@ -466,6 +469,10 @@ treemap(tm_data,
         title="",
         palette = c("#fc8b9b","#F6BC65")
             )
+
+ggsave("treemap.jpg", dpi=1000)
+ggsave("treemap.eps", dpi=1000)
+ggsave("treemap.png", dpi=1000)
 ```
 
 ```{r, eval=FALSE}
@@ -518,9 +525,16 @@ geom_segment(aes(x = Country, y = 86.6, xend = Country, yend = Observations), co
         axis.ticks = element_blank(),
         legend.position="none",
         axis.text.y = element_text(color="black", 
-                           size=12)
+                           size=12),
+        panel.background = element_rect(fill = "#f9faf9"),
+        plot.background = element_rect(fill = "#f9faf9")                             
         )+ 
   geom_hline(yintercept = 86.6, color = "black", size=0.5)
+
+ggsave("d_1.1.jpg", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_1.1.eps", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_1.1.png", dpi=1000, width = 20, height = 20, units = "cm")
+
 ```
 
 Does your business have a broadband connection?
@@ -560,9 +574,15 @@ geom_segment(aes(x = Country, y = 8.1, xend = Country, yend = Observations), col
         axis.ticks = element_blank(),
         legend.position="none",
         axis.text.y = element_text(color="black", 
-                           size=12)
+                           size=12),
+        panel.background = element_rect(fill = "#f9faf9"),
+        plot.background = element_rect(fill = "#f9faf9")                             
         )+ 
   geom_hline(yintercept = 8.1, color = "black", size=0.5)
+
+ggsave("d_1.2.jpg", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_1.2.eps", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_1.2.png", dpi=1000, width = 20, height = 20, units = "cm")
 ```
 
 ## 1.4 Share of businesses with broadband contracted speed of 30 Mbps or more
@@ -599,9 +619,15 @@ geom_segment(aes(x = Country, y = 85.6, xend = Country, yend = Observations), co
         axis.ticks = element_blank(),
         legend.position="none",
         axis.text.y = element_text(color="black", 
-                           size=12)
+                           size=12),
+        panel.background = element_rect(fill = "#f9faf9"),
+        plot.background = element_rect(fill = "#f9faf9")  
         )+ 
   geom_hline(yintercept = 85.6, color = "black", size=0.5)
+
+ggsave("d_2.1.jpg", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_2.1.eps", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_2.1.png", dpi=1000, width = 20, height = 20, units = "cm")
 ```
 
 ## 2.2 Share of individuals using the internet to interact with public authorities
@@ -652,9 +678,15 @@ geom_segment(aes(x = Country, y = 60.2, xend = Country, yend = Observations), co
         axis.ticks = element_blank(),
         legend.position="none",
         axis.text.y = element_text(color="black", 
-                           size=12)
+                           size=12),
+        panel.background = element_rect(fill = "#f9faf9"),
+        plot.background = element_rect(fill = "#f9faf9")  
         )+ 
   geom_hline(yintercept = 60.2, color = "black", size=0.5)
+
+ggsave("d_2.2.jpg", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_2.2.eps", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_2.2.png", dpi=1000, width = 20, height = 20, units = "cm")
 ```
 
 ## 2.3 Share of internet users who have purchase online in the last 12 months
@@ -683,9 +715,15 @@ geom_segment(aes(x = Country, y = 69.9, xend = Country, yend = Observations), co
         axis.ticks = element_blank(),
         legend.position="none",
         axis.text.y = element_text(color="black", 
-                           size=12)
+                           size=12),
+        panel.background = element_rect(fill = "#f9faf9"),
+        plot.background = element_rect(fill = "#f9faf9")  
         )+ 
   geom_hline(yintercept = 69.9, color = "black", size=0.5)
+
+ggsave("d_2.3.jpg", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_2.3.eps", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_2.3.png", dpi=1000, width = 20, height = 20, units = "cm")
 ```
 
 ## 2.4 Share of small businesses making e-commerce sales in the last 12 months
@@ -716,9 +754,15 @@ geom_segment(aes(x = Country, y = 22.1, xend = Country, yend = Observations), co
         axis.ticks = element_blank(),
         legend.position="none",
         axis.text.y = element_text(color="black", 
-                           size=12)
+                           size=12),
+        panel.background = element_rect(fill = "#f9faf9"),
+        plot.background = element_rect(fill = "#f9faf9")  
         )+ 
   geom_hline(yintercept = 22.1, color = "black", size=0.5)
+
+ggsave("d_2.4.jpg", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_2.4.eps", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_2.4.png", dpi=1000, width = 20, height = 20, units = "cm")
 ```
 
 ## 2.5 Share of businesses with a web presence
@@ -765,7 +809,14 @@ ggplot(d_2.5.1, aes(x=reorder(`Media`, Share), y=Share)) +
         axis.ticks = element_blank(),
         axis.text.y = element_text(color="black", 
                            size=24),
-        legend.position="none")
+        legend.position="none",
+        panel.background = element_rect(fill = "#f9faf9"),
+        plot.background = element_rect(fill = "#f9faf9")  
+        )
+
+ggsave("d_2.5.1.jpg", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_2.5.1.eps", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_2.5.1.png", dpi=1000, width = 20, height = 20, units = "cm")
 ```
 
 ```{r, eval=FALSE}
@@ -786,9 +837,15 @@ geom_segment(aes(x = Country, y = 74.1, xend = Country, yend = Observations), co
         axis.ticks = element_blank(),
         legend.position="none",
         axis.text.y = element_text(color="black", 
-                           size=12)
+                           size=12),
+        panel.background = element_rect(fill = "#f9faf9"),
+        plot.background = element_rect(fill = "#f9faf9")  
         )+ 
   geom_hline(yintercept = 74.1, color = "black", size=0.5)
+
+ggsave("d_2.5.jpg", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_2.5.eps", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_2.5.png", dpi=1000, width = 20, height = 20, units = "cm")
 ```
 
 ## 2.6 Share of businesses purchasing cloud services
@@ -836,8 +893,14 @@ plot_new_old <- ggplot(data = new_old,
   labs(title = "% Share new start-ups",
        subtitle = "N=134",
        caption = "Cornerstone Economics (2022)")+
-   theme(title = Blue.text, axis.title = Blue.text,text=element_text(family="Franklin Gothic Book"),legend.title = element_blank()
+   theme(title = Blue.text, axis.title = Blue.text,text=element_text(family="Franklin Gothic Book"),legend.title = element_blank(),
+        panel.background = element_rect(fill = "#f9faf9"),
+        plot.background = element_rect(fill = "#f9faf9")  
          )
+
+ggsave("d_3.1.1.jpg", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_3.1.1.eps", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_3.1.1.png", dpi=1000, width = 20, height = 20, units = "cm")
 ```
 
 ```{r, eval=FALSE}
@@ -858,9 +921,15 @@ geom_segment(aes(x = Country, y = 25.5, xend = Country, yend = Observations), co
         axis.ticks = element_blank(),
         legend.position="none",
         axis.text.y = element_text(color="black", 
-                           size=12)
+                           size=12),
+        panel.background = element_rect(fill = "#f9faf9"),
+        plot.background = element_rect(fill = "#f9faf9")  
         )+ 
   geom_hline(yintercept = 25.5, color = "black", size=0.5)
+
+ggsave("d_3.1.jpg", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_3.1.eps", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_3.1.png", dpi=1000, width = 20, height = 20, units = "cm")
 ```
 
 ## 3.2 Businesses accepting crypto currencies as a means of payment
@@ -900,8 +969,46 @@ ggplot(d_3.2, aes(x=reorder(`Methode`, Share), y=Share)) +
         axis.ticks = element_blank(),
         axis.text.y = element_text(color="black", 
                            size=24),
-        legend.position="none")
+        legend.position="none",
+        panel.background = element_rect(fill = "#f9faf9"),
+        plot.background = element_rect(fill = "#f9faf9")  
+        )
+
+ggsave("d_3.2.jpg", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_3.2.eps", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_3.2.png", dpi=1000, width = 20, height = 20, units = "cm")
 ```
+
+## 3.3 Github usage
+```{r, eval=FALSE}
+ggplot(d_3.3, aes(x=reorder(`Countries`,Normalized), y=Normalized, label=Normalized)) + 
+  geom_point( aes(col=Label), size=12)  +
+geom_segment(aes(x = Countries, y = 0.09, xend = Countries, yend = Normalized), colour=d_3.3$Colour, size=1)+
+  scale_color_manual(name="Compared to average", 
+                     labels = c("Above", "Below", "Aruba"), 
+                     values = c("Positive"="#fc8b9b", "Negative"="#F6BC65", "Aruba"="#81d7d3")) + 
+  geom_text(color="black", size=3.5) +
+  ylim(0, 1) +
+  coord_flip()+
+  theme_classic()+
+  theme(axis.text.x=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.line.x = element_blank(),
+        axis.ticks = element_blank(),
+        legend.position="none",
+        axis.text.y = element_text(color="black", 
+                           size=12),
+        panel.background = element_rect(fill = "#f9faf9"),
+        plot.background = element_rect(fill = "#f9faf9")  
+        )+ 
+  geom_hline(yintercept = 0.09, color = "black", size=0.5)
+
+ggsave("d_3.3.jpg", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_3.3.eps", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_3.3.png", dpi=1000, width = 20, height = 20, units = "cm")
+```
+
 
 # 4 Jobs
 
@@ -979,7 +1086,14 @@ ggplot(gg_set, aes(x=reorder(`gg_label`, gg_skill), y=gg_skill)) +
         axis.ticks = element_blank(),
         axis.text.y = element_text(color="black", 
                            size=24),
-        legend.position="none")
+        legend.position="none",
+        panel.background = element_rect(fill = "#f9faf9"),
+        plot.background = element_rect(fill = "#f9faf9")  
+        )
+
+ggsave("d_4.1.1.jpg", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_4.1.1.eps", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_4.1.1.png", dpi=1000, width = 20, height = 20, units = "cm")
 ```
 
 4.1.2
@@ -1002,9 +1116,15 @@ geom_segment(aes(x = Country, y = 58, xend = Country, yend = Observations), colo
         axis.ticks = element_blank(),
         legend.position="none",
         axis.text.y = element_text(color="black", 
-                           size=12)
+                           size=12),
+        panel.background = element_rect(fill = "#f9faf9"),
+        plot.background = element_rect(fill = "#f9faf9")  
         )+ 
   geom_hline(yintercept = 58, color = "black", size=0.5)
+
+ggsave("d_4.1.jpg", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_4.1.eps", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_4.1.png", dpi=1000, width = 20, height = 20, units = "cm")
 ```
 
 # 4.2 ICT task-intensive jobs as a percentage of total employment
@@ -1045,9 +1165,15 @@ geom_segment(aes(x = Country, y = 76.8, xend = Country, yend = Observations), co
         axis.ticks = element_blank(),
         legend.position="none",
         axis.text.y = element_text(color="black", 
-                           size=12)
+                           size=12),
+        panel.background = element_rect(fill = "#f9faf9"),
+        plot.background = element_rect(fill = "#f9faf9")  
         )+ 
   geom_hline(yintercept = 76.8, color = "black", size=0.5)
+
+ggsave("d_5.1.jpg", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_5.1.eps", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_5.1.png", dpi=1000, width = 20, height = 20, units = "cm")
 ```
 
 ## 5.2 Women as a share of all 16--24-year-olds who can program
@@ -1084,9 +1210,15 @@ geom_segment(aes(x = Country, y = 27.9, xend = Country, yend = Observations), co
         axis.ticks = element_blank(),
         legend.position="none",
         axis.text.y = element_text(color="black", 
-                           size=12)
+                           size=12),
+        panel.background = element_rect(fill = "#f9faf9"),
+        plot.background = element_rect(fill = "#f9faf9")  
         )+ 
   geom_hline(yintercept = 27.9, color = "black", size=0.5)
+
+ggsave("d_5.2.jpg", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_5.2.eps", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_5.2.png", dpi=1000, width = 20, height = 20, units = "cm")
 ```
 
 ## 5.3 Disparity in internet use between men and women
@@ -1115,9 +1247,15 @@ geom_segment(aes(x = Country, y = 0.7, xend = Country, yend = Observations), col
         axis.ticks = element_blank(),
         legend.position="none",
         axis.text.y = element_text(color="black", 
-                           size=12)
+                           size=12),
+        panel.background = element_rect(fill = "#f9faf9"),
+        plot.background = element_rect(fill = "#f9faf9")  
         )+ 
   geom_hline(yintercept = 0.7, color = "black", size=0.5)
+
+ggsave("d_5.3.jpg", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_5.3.eps", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_5.3.png", dpi=1000, width = 20, height = 20, units = "cm")
 ```
 
 ## 5.4 Percentage of individuals who use digital equipment at work that telework from home once a week or more
@@ -1150,9 +1288,15 @@ geom_segment(aes(x = Country, y = 26.4, xend = Country, yend = Observations), co
         axis.ticks = element_blank(),
         legend.position="none",
         axis.text.y = element_text(color="black", 
-                           size=12)
+                           size=12),
+        panel.background = element_rect(fill = "#f9faf9"),
+        plot.background = element_rect(fill = "#f9faf9")  
         )+ 
   geom_hline(yintercept = 26.4, color = "black", size=0.5)
+
+ggsave("d_5.4.jpg", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_5.4.eps", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_5.4.png", dpi=1000, width = 20, height = 20, units = "cm")
 ```
 
 # Trust
@@ -1184,9 +1328,15 @@ geom_segment(aes(x = Country, y = 3.4, xend = Country, yend = Observations), col
         axis.ticks = element_blank(),
         legend.position="none",
         axis.text.y = element_text(color="black", 
-                           size=12)
+                           size=12),
+        panel.background = element_rect(fill = "#f9faf9"),
+        plot.background = element_rect(fill = "#f9faf9")  
         )+ 
   geom_hline(yintercept = 3.35, color = "black", size=0.5)
+
+ggsave("d_6.1.jpg", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_6.1.eps", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_6.1.png", dpi=1000, width = 20, height = 20, units = "cm")
 ```
 
 ## 6.2
@@ -1213,9 +1363,15 @@ geom_segment(aes(x = Country, y = 27.2, xend = Country, yend = Observations), co
         axis.ticks = element_blank(),
         legend.position="none",
         axis.text.y = element_text(color="black", 
-                           size=12)
+                           size=12),
+        panel.background = element_rect(fill = "#f9faf9"),
+        plot.background = element_rect(fill = "#f9faf9")  
         )+ 
   geom_hline(yintercept = 27.2, color = "black", size=0.5)
+
+ggsave("d_6.2.jpg", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_6.2.eps", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_6.2.png", dpi=1000, width = 20, height = 20, units = "cm")
 ```
 
 ## 6.3 Percentage of individuals not buying online due to concerns about returning products
@@ -1248,9 +1404,15 @@ geom_segment(aes(x = Country, y = 23.7, xend = Country, yend = Observations), co
         axis.ticks = element_blank(),
         legend.position="none",
         axis.text.y = element_text(color="black", 
-                           size=12)
+                           size=12),
+        panel.background = element_rect(fill = "#f9faf9"),
+        plot.background = element_rect(fill = "#f9faf9")  
         )+ 
   geom_hline(yintercept = 23.7, color = "black", size=0.5)
+
+ggsave("d_6.3.jpg", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_6.3.eps", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_6.3.png", dpi=1000, width = 20, height = 20, units = "cm")
 ```
 
 
@@ -1296,9 +1458,15 @@ geom_segment(aes(x = Country, y = 44, xend = Country, yend = Observations), colo
         axis.ticks = element_blank(),
         legend.position="none",
         axis.text.y = element_text(color="black", 
-                           size=12)
+                           size=12),
+        panel.background = element_rect(fill = "#f9faf9"),
+        plot.background = element_rect(fill = "#f9faf9")  
         )+ 
   geom_hline(yintercept = 44, color = "black", size=0.5)
+
+ggsave("d_7.1.jpg", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_7.1.eps", dpi=1000, width = 20, height = 20, units = "cm")
+ggsave("d_7.1.png", dpi=1000, width = 20, height = 20, units = "cm")
 ```
 
 # Summary statistics
